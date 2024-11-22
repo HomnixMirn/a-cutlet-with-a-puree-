@@ -120,7 +120,7 @@ def get_events(request: HttpRequest, page: int = 0):
                 'next_day' : datetime.now() + timedelta(days=1),
                 'next_week' : datetime.now() + timedelta(days=7),
                 'next_month' : datetime.now() + timedelta(days=30),
-                'next_ quarter' : datetime.now() + timedelta(days=90),
+                'next_quarter' : datetime.now() + timedelta(days=90),
                 'next_half_year' : datetime.now() + timedelta(days=180),
             }
             try:
@@ -141,7 +141,14 @@ def get_events(request: HttpRequest, page: int = 0):
         return Response(serializer.data[page*10:(page+1)*10], status=status.HTTP_200_OK)
 
 
-
+@api_view(['GET'])
+def get_event(request: HttpRequest, id: int):
+    try:
+        event_obj = event.objects.get(id=id)
+        serializer = EventSerializer(event_obj)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def get_latest_event(request: HttpRequest):
