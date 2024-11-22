@@ -10,7 +10,7 @@ import axios from 'axios';
 
 function Header() {
     useEffect(() => {
-        axios.get(API_URL + 'personal_info',localStorage.getItem('token')).then(res => {
+        axios.get(API_URL + 'personal_info', {  headers: {'Authorization': 'Token ' + localStorage.getItem('token')}}).then(res => {
             const data = res.data
         }).catch(err => {
             console.log(err)
@@ -18,7 +18,7 @@ function Header() {
     })
     function LogOut(e) {
         e.preventDefault()
-        axios.get(API_URL + "logout", localStorage.getItem('token')).then(
+        axios.get(API_URL + "logout",{  headers: {'Authorization': 'Token ' + localStorage.getItem('token')}}).then(
             () => {
                 localStorage.removeItem('token')
                 window.location.href = '/'
@@ -33,7 +33,9 @@ function Header() {
                 <img src={info} alt="" className="header-img"/>
                 <h1 className="header-a-h1">О нас</h1>
             </a>
-            <a href="" className='header-a'>
+            <a href="" className='header-a' onClick={(e) => {
+                e.preventDefault() 
+            }}  >
                 <img src={calendar} alt="" className="header-img" />
                 <h1 className="header-a-h1">Календарь</h1>
             </a>

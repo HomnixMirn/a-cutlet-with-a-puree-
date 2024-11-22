@@ -13,7 +13,8 @@ function Register()  {
         const name = data.get('name')
         const fname = data.get('fname')
         const email = data.get('email')
-        axios.post(API_URL + 'register', {username,password,name,fname,email}).catch(err => {
+        const time_zone = (new Date().getTimezoneOffset())/60;
+        axios.post( API_URL + 'register', {username,password,name,fname,email,time_zone}).catch(err => {
             console.log(err)
         })
     }
