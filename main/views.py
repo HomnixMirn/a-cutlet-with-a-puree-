@@ -76,7 +76,7 @@ def logout(request: HttpRequest):
     if token:
         try:
             token = token.split(' ')[1]
-            token_obj = Token.objects.get(key=token)
+            token_obj = userToken.objects.get(key=token)
             token_obj.delete()
             return Response({'message': 'Logout successful'}, status=status.HTTP_200_OK)
         except Token.DoesNotExist:
