@@ -57,9 +57,9 @@ def personal_info(request: HttpRequest):
                 return Response(serializer.data, status=status.HTTP_200_OK)
             except Exception as e:
                 print(e)
-                return Response({'error': e}, status=status.HTTP_401_UNAUTHORIZED)
+                return Response( status=status.HTTP_204_NO_CONTENT)
         else:
-            return Response({'error': 'No token provided'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response( status=status.HTTP_204_NO_CONTENT)
     elif request.method == 'POST':
         data = request.data
         try:
