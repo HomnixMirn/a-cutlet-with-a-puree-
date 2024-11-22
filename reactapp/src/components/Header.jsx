@@ -27,12 +27,12 @@ function Header() {
     }
     return (
         <header>
-            <a href="" className="logo">Sport Pulse</a>
+            <Link to={'/'} className="logo">Sport Pulse</Link>
             <div className="header-left">
-            <a href="" className='header-a'>
+            <Link to={'/'} className='header-a'>
                 <img src={info} alt="" className="header-img"/>
                 <h1 className="header-a-h1">О нас</h1>
-            </a>
+            </Link>
             <Link to={'/calendar'} className='header-a'>
                 <img src={calendar} alt="" className="header-img" />
                 <h1 className="header-a-h1">Календарь</h1>
