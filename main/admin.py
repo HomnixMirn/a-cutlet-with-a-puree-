@@ -5,3 +5,14 @@ from .models import *
 @admin.register(user)
 class userAdmin(admin.ModelAdmin):
     list_display = ['user', 'name', 'fname', 'email']
+    
+@admin.register(userToken)
+class userTokenAdmin(admin.ModelAdmin):
+    list_display = ['user', 'key']
+    
+    def key(self, obj):
+        return obj.key
+    
+@admin.register(event)
+class eventAdmin(admin.ModelAdmin):
+    list_display = ['num_SM', 'name', 'date_start', 'date_end', 'location', 'participants', 'age_group' ]

@@ -7,6 +7,7 @@ from django.http import HttpRequest
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate 
+from .parse.sorting_data import get_data
 import json
 import re
 # Create your views here.
@@ -75,12 +76,26 @@ def logout(request: HttpRequest):
     if token:
         try:
             token = token.split(' ')[1]
-            token_obj = Token.objects.get(key=token)
+            token_obj = userToken.objects.get(key=token)
             token_obj.delete()
             return Response({'message': 'Logout successful'}, status=status.HTTP_200_OK)
         except Token.DoesNotExist:
             return Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)
     else:
         return Response({'error': 'No token provided'}, status=status.HTTP_401_UNAUTHORIZED)
+    
+@api_view(['GET'])
+def get_events(request: HttpRequest):
+    events = event.objects.all()
+    serializer = EventSerializer(events, many=True)
+    if len(serializer.data) <= 10:
+        data = get_data()
+        for item in data:
+
+            event.objects.get_or_create(**item)
+        events = event.objects.all()
+        serializer = EventSerializer(events, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
     
     
