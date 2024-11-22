@@ -1,9 +1,14 @@
 import { useEffect , useState} from 'react'
 import poisk from '../static/img/poisk.png'
 import './Calendar.css'
+import {API_URL} from '../index'
+import axios from 'axios'
 
 function Calendar()  {
     const [checkModal, setCheckModal] = useState(true)
+    const id = 4
+    const headers = {'Authorization': 'Token ' + localStorage.getItem('token')}
+    axios.post(API_URL + 'add_personal_event', { headers,id}).then(res => console.log( )).catch(err => console.log(err))
 
     return (
     <div className='mega-block'>
