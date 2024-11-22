@@ -5,26 +5,6 @@ from rest_framework.authtoken.models import Token
 
 # Create your models here.
 
-class user (models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=50)
-    fname = models.CharField(max_length=50)
-    email = models.EmailField()
-    time_zone = models.CharField(max_length=10)
-    
-    
-    def __str__(self):
-        return self.name
-    
-    def user_name(self):
-        return self.user.username
-    
-
-class userToken (Token):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    
-    
-    
 class event(models.Model):
     num_SM = models.IntegerField()
     name = models.CharField(max_length=150)
@@ -37,3 +17,28 @@ class event(models.Model):
     
     def __str__(self):
         return self.name
+
+class user (models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+    fname = models.CharField(max_length=50)
+    email = models.EmailField()
+    time_zone = models.CharField(max_length=10)
+    registered_events = models.ManyToManyField(event, blank=True)
+    
+    
+    def __str__(self):
+        return self.name
+    
+    def user_name(self):
+        return self.user.username
+    
+    def get_events(self):
+        return self.registered_events.all()
+    
+
+class userToken (Token):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    
+    

@@ -51,9 +51,13 @@ def personal_info(request: HttpRequest):
                 token = token.split(' ')[1]
                 print(token) 
                 token_obj = userToken.objects.get(key=token)
+                print(1)
                 user_obj = token_obj.user
+                print(2)
                 personal_info = user.objects.get(user=user_obj)
+                print(3)
                 serializer = UserSerializer(personal_info)
+                print(4)
                 return Response(serializer.data, status=status.HTTP_200_OK)
             except Exception as e:
                 print(e)
@@ -156,4 +160,27 @@ def get_latest_event(request: HttpRequest):
     serializer = EventSerializer(events, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
     
+@api_view(['POST'])
+def add_personal_event(request: HttpRequest):
+    data = request.data
+    headers = request.headers
+    token = headers.get('Authorization')
+    if token:
+        try:
+            token = token.split(' ')[1]
+            token_obj = userToken.objects.get(key=token)
+            user_obj = token_obj.user
+            event_obj = event.objects.get(id=data['event_id'])
+            user_events = user.objects.get(user=user_obj).registered_events
+            if event_obj in user_events:
+                return Response({'error': 'Event already added'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            user_events.add(event_obj)
+            
+            return Response(status=status.HTTP_202_ACCEPTED)
+        except Exception as e: 
+            print(e)
+            return Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)
+    else:
+        return Response({'error': 'No token provided'}, status=status.HTTP_401_UNAUTHORIZED)
     

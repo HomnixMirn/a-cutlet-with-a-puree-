@@ -1,13 +1,22 @@
 from rest_framework import serializers
 from .models import *
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = user
-        fields = ['id', 'user_name', 'name', 'fname', 'email']
-        
+
 class EventSerializer(serializers.ModelSerializer):
+    registered_events = serializers.StringRelatedField(many=True, read_only=True)
     class Meta:
         model = event
-        fields = ['id', 'num_SM', 'name', 'date_start', 'date_end', 'location', 'participants', 'age_group', 'description']
+        fields = "__all__"
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    get_events = EventSerializer(many=True, read_only=True)
+    class Meta:
+        model = user
+        fields = ['id', 'user_name', 'name', 'fname', 'email', 'get_events']
+        
+        
+        
+
         
