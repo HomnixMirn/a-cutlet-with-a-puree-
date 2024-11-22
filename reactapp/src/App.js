@@ -6,7 +6,7 @@ import Login from './packages/Login';
 import Header from './components/Header';
 import Cart from './packages/Cart';
 import About from './packages/About';
-
+import Calendar from './packages/Calendar';
 
 function App() {
   return (
@@ -14,9 +14,10 @@ function App() {
       <Header/>
       <main>
         <Routes>
+          <Route path="/" element={<About />} />
+          <Route path="/calendar" element={<Calendar />} />
           <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/about" element={<About />} />
           <Route path="/personal_info" element={<Login />} />
         </Routes>
       </main>
