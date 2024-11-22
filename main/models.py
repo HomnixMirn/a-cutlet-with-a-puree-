@@ -15,8 +15,11 @@ class user (models.Model):
     def __str__(self):
         return self.name
     
+    def user_username(self):
+        return self.user.username
+    
 
-class token (Token):
+class userToken (Token):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self):
