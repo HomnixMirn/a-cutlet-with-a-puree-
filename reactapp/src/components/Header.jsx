@@ -10,7 +10,7 @@ import axios from 'axios';
 
 function Header() {
     useEffect(() => {
-        axios.get(API_URL + 'personal_info',localStorage.getItem('token')).then(res => {
+        axios.get(API_URL + 'personal_info', {  headers: {'Authorization': 'Token ' + localStorage.getItem('token')}}).then(res => {
             const data = res.data
         }).catch(err => {
             console.log(err)
@@ -18,7 +18,7 @@ function Header() {
     })
     function LogOut(e) {
         e.preventDefault()
-        axios.get(API_URL + "logout", localStorage.getItem('token')).then(
+        axios.get(API_URL + "logout",{  headers: {'Authorization': 'Token ' + localStorage.getItem('token')}}).then(
             () => {
                 localStorage.removeItem('token')
                 window.location.href = '/'
