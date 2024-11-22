@@ -18,7 +18,7 @@ function Register()  {
     }
     return (
       <div className="main-reg">
-        <form action="" method="post" onSubmit={(e) => PostFormRegister(e)}>
+        <form action="" method="post" onSubmit={(e) => PostFormRegister(e)}> 
             <h1 class="h1-reg">РЕГИСТРАЦИЯ</h1>
               <p className="p-reg">у меня есть аккаунт</p>
                 <div class="input-reg">
