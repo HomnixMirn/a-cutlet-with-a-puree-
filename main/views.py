@@ -8,8 +8,8 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate 
 from .parse.sorting_data import get_data
-import json
 import re
+from datetime import datetime, timedelta
 # Create your views here.
 
 def is_valid_email(email):
@@ -89,19 +89,44 @@ def logout(request: HttpRequest):
             return Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)
     else:
         return Response({'error': 'No token provided'}, status=status.HTTP_401_UNAUTHORIZED)
-    
+
+def create_event():
+    data = get_data()
+    for item in data:
+
+            event.objects.get_or_create(**item)
+
 @api_view(['GET'])
 def get_events(request: HttpRequest, page: int = 0):
     events = event.objects.all()
+    get = request.GET
     
     serializer = EventSerializer(events, many=True)
     if len(serializer.data) < 10:
-        data = get_data()
-        for item in data:
+        create_event()
+        
+    events = event.objects.all()
+    if 'filters' in get:
+        filters = request.GET['filters'].split(',')
 
-            event.objects.get_or_create(**item)
-        events = event.objects.all()
-        serializer = EventSerializer(events, many=True)
+        try:
+            events = events.filter(Q(*[Q(age_group__icontains=filter.lower())  for filter in filters],_connector='OR'))
+        except Exception as e:
+            print(e)
+    if "time" in get:
+        time = request.GET['time']
+        times = {
+            'next_day' : datetime.now() + timedelta(days=1),
+            'next_week' : datetime.now() + timedelta(days=7),
+            'next_month' : datetime.now() + timedelta(days=30),
+            'next_ quarter' : datetime.now() + timedelta(days=90),
+            'next_half_year' : datetime.now() + timedelta(days=180),
+        }
+        try:
+            events = events.filter(date_start__lte=times[time])
+        except Exception as e:
+            print(e)
+    serializer = EventSerializer(events, many=True)
     try:
         page = int(page)
     except:
