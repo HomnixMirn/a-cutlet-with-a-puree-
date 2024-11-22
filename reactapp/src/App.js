@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Register from './packages/Register';
 import Login from './packages/Login';
 import Header from './components/Header';
-
+import Calendar from './packages/Calendar';
 
 function App() {
   return (
@@ -11,6 +11,7 @@ function App() {
       <Header/>
       <main>
         <Routes>
+        <Route path="/calendar" element={<Calendar />} />
           <Route path="/register" element={<Register />} />
           <Route path="/personal_info" element={<Login />} />
         </Routes>
