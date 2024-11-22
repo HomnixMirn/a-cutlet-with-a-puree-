@@ -17,14 +17,18 @@ function Register()  {
         })
     }
     return (
-      <div>
+      <div className="main-reg">
         <form action="" method="post" onSubmit={(e) => PostFormRegister(e)}>
-            <input type="text" name="name" />
-            <input type="text" name="fname" />
-            <input type="email" name="email" />
-            <input type="text" name='username' />
-            <input type="password" name='password' />
-            <button type="submit">Register</button>
+            <h1 class="h1-reg">РЕГИСТРАЦИЯ</h1>
+              <p className="p-reg">у меня есть аккаунт</p>
+                <div class="input-reg">
+                    <input type="text" name="name" />
+                    <input type="text" name="fname" />
+                    <input type="email" name="email" />
+                    <input type="text" name='username' />
+                    <input type="password" name='password' />
+                  </div>
+                <button type="submit">Register</button>
         </form>
       </div>
     )
