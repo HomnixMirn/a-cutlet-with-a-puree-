@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from .models import *
-# from .serializers import *
+from .serializers import *
 from django.http import HttpRequest
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -36,10 +36,41 @@ def register(request: HttpRequest):
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET','POST'])
+def personal_info(request: HttpRequest):
+    if request.method == 'GET':
+        headers = request.headers
+        token = headers.get('Authorization')
+        if token:
+            
+            try:
+                token = token.split(' ')[1]
+                token_obj = Token.objects.get(key=token)
+                user_obj = token_obj.user
+                personal_info = user.objects.get(user=user_obj)
+                serializer = UserSerializer(personal_info)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except Token.DoesNotExist:
+                return Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            return Response({'error': 'No token provided'}, status=status.HTTP_401_UNAUTHORIZED)
+    elif request.method == 'POST':
+        data = request.data
+        try:
+            login = data['login']
+            password = data['password']
+            user = authenticate(username=login, password=password)
+            if user is not None:
+                token, _ = userToken.objects.get_or_create(user=user)
+                return Response({'token': token.key}, status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'Invalid login or password'}, status=status.HTTP_401_UNAUTHORIZED)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    
 {
-"username" : "ad",
-"password" : "admin",
-"email" : "saasdasd@mail.ru",
-"name" : "test",
-"fname" : "giga"
+"login":"a22d",
+"password":"admin"
 }
+{"headers" :{
+"Authorization" :"Token qsqwdsda"}}
