@@ -19,7 +19,8 @@ function Register()  {
     }
     return (
         <div className='modal-form'>
-            <form className = 'form' action="" method="post" onSubmit={(e) => PostFormRegister(e)}>
+            <form className = 'form' action="" method="post" 
+            onSubmit={(e) => PostFormRegister(e)}>
                 <h1 className="form-h1">Регистрация</h1>
                 <a href="" className="form-a">Уже есть аккаунт?</a>
                 <div className="form-mini-block">
