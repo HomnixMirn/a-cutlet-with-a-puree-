@@ -98,40 +98,49 @@ def create_event():
 
 @api_view(['GET'])
 def get_events(request: HttpRequest, page: int = 0):
-    events = event.objects.all()
-    get = request.GET
-    
-    serializer = EventSerializer(events, many=True)
-    if len(serializer.data) < 10:
-        create_event()
+    if request.method == 'GET':
+        events = event.objects.all()
+        get = request.GET
         
-    events = event.objects.all()
-    if 'filters' in get:
-        filters = request.GET['filters'].split(',')
+        serializer = EventSerializer(events, many=True)
+        if len(serializer.data) < 10:
+            create_event()
+            
+        events = event.objects.all()
+        if 'filters' in get:
+            filters = request.GET['filters'].split(',')
 
+            try:
+                events = events.filter(Q(*[Q(age_group__icontains=filter.lower())  for filter in filters],_connector='OR'))
+            except Exception as e:
+                print(e)
+        if "time" in get:
+            time = request.GET['time']
+            times = {
+                'next_day' : datetime.now() + timedelta(days=1),
+                'next_week' : datetime.now() + timedelta(days=7),
+                'next_month' : datetime.now() + timedelta(days=30),
+                'next_ quarter' : datetime.now() + timedelta(days=90),
+                'next_half_year' : datetime.now() + timedelta(days=180),
+            }
+            try:
+                events = events.filter(date_start__lte=times[time])
+            except Exception as e:
+                print(e)
+        if 'search' in get:
+            search = request.GET['search']
+            try:
+                events = events.filter(Q(Q(location__contains=search.lower()) | Q(location__contains=search.upper()) | Q(location__contains=search.title())) | Q((Q(name__icontains=search.lower()) | Q(name__icontains=search.upper()) | Q(name__icontains=search.title()))))
+            except Exception as e:
+                print(e)
+        serializer = EventSerializer(events, many=True)
         try:
-            events = events.filter(Q(*[Q(age_group__icontains=filter.lower())  for filter in filters],_connector='OR'))
-        except Exception as e:
-            print(e)
-    if "time" in get:
-        time = request.GET['time']
-        times = {
-            'next_day' : datetime.now() + timedelta(days=1),
-            'next_week' : datetime.now() + timedelta(days=7),
-            'next_month' : datetime.now() + timedelta(days=30),
-            'next_ quarter' : datetime.now() + timedelta(days=90),
-            'next_half_year' : datetime.now() + timedelta(days=180),
-        }
-        try:
-            events = events.filter(date_start__lte=times[time])
-        except Exception as e:
-            print(e)
-    serializer = EventSerializer(events, many=True)
-    try:
-        page = int(page)
-    except:
-        page = 0
-    return Response(serializer.data[page*10:(page+1)*10], status=status.HTTP_200_OK)
+            page = int(page)
+        except:
+            page = 0
+        return Response(serializer.data[page*10:(page+1)*10], status=status.HTTP_200_OK)
+
+
 
 
 @api_view(['GET'])
