@@ -43,21 +43,13 @@ def personal_info(request: HttpRequest):
     if request.method == 'GET':
         headers = request.headers
         token = headers.get('Authorization')
-
         if token:
-            
             try:
-                
                 token = token.split(' ')[1]
-                print(token) 
                 token_obj = userToken.objects.get(key=token)
-                print(1)
                 user_obj = token_obj.user
-                print(2)
                 personal_info = user.objects.get(user=user_obj)
-                print(3)
                 serializer = UserSerializer(personal_info)
-                print(4)
                 return Response(serializer.data, status=status.HTTP_200_OK)
             except Exception as e:
                 print(e)
