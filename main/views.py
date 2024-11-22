@@ -91,17 +91,28 @@ def logout(request: HttpRequest):
         return Response({'error': 'No token provided'}, status=status.HTTP_401_UNAUTHORIZED)
     
 @api_view(['GET'])
-def get_events(request: HttpRequest):
+def get_events(request: HttpRequest, page: int = 0):
     events = event.objects.all()
+    
     serializer = EventSerializer(events, many=True)
-    if len(serializer.data) <= 10:
+    if len(serializer.data) < 10:
         data = get_data()
         for item in data:
 
             event.objects.get_or_create(**item)
         events = event.objects.all()
         serializer = EventSerializer(events, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    try:
+        page = int(page)
+    except:
+        page = 0
+    return Response(serializer.data[page*10:(page+1)*10], status=status.HTTP_200_OK)
 
+
+@api_view(['GET'])
+def get_latest_event(request: HttpRequest):
+    events = event.objects.all().order_by('-date_start')[:2]
+    serializer = EventSerializer(events, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
     
     
