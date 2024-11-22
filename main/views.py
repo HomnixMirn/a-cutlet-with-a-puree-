@@ -25,11 +25,12 @@ def register(request: HttpRequest):
         username = data['username']
         password = data['password']
         email = data['email']
+        time_zone = data['time_zone']
         if is_valid_email(email):
             if User.objects.filter(Q(username=username) | Q(email=email)).exists():
                 return Response({'error': 'User already exists'}, status=status.HTTP_400_BAD_REQUEST)
             
-            user.objects.create(user=User.objects.create_user(username=username, password=password, email=email), name=data['name'], fname=data['fname'], email=email)
+            user.objects.create(user=User.objects.create_user(username=username, password=password, email=email), name=data['name'], fname=data['fname'], email=email , time_zone=time_zone)
             print('success')
             return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
         else:

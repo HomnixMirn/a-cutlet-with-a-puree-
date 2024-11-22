@@ -10,6 +10,7 @@ class user (models.Model):
     name = models.CharField(max_length=50)
     fname = models.CharField(max_length=50)
     email = models.EmailField()
+    time_zone = models.CharField(max_length=10)
     
     
     def __str__(self):
