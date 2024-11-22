@@ -6,9 +6,10 @@ import axios from 'axios'
 
 function Calendar()  {
     const [checkModal, setCheckModal] = useState(true)
-    const id = 4
-    const headers = {'Authorization': 'Token ' + localStorage.getItem('token')}
-    axios.post(API_URL + 'add_personal_event', { headers,id}).then(res => console.log( )).catch(err => console.log(err))
+    //TODO: добавить событие пользователю по id
+    // const id = 4
+    // const headers = {Authorization: 'Token ' + localStorage.getItem('token')}
+    // axios.post(API_URL + 'add_personal_event', {'id':id} ,   {headers: {'Authorization': 'Token ' + localStorage.getItem('token')}}).then(res => console.log( )).catch(err => console.log(err))
 
     return (
     <div className='mega-block'>

@@ -162,12 +162,14 @@ def add_personal_event(request: HttpRequest):
             token = token.split(' ')[1]
             token_obj = userToken.objects.get(key=token)
             user_obj = token_obj.user
-            event_obj = event.objects.get(id=data['event_id'])
-            user_events = user.objects.get(user=user_obj).registered_events
-            if event_obj in user_events:
+            event_obj = event.objects.get(id=data['id'])
+            user_events = user.objects.get(user=user_obj)
+            print(user_events)
+            print(event_obj)
+            if event_obj in user_events.get_events():
                 return Response({'error': 'Event already added'}, status=status.HTTP_400_BAD_REQUEST)
             
-            user_events.add(event_obj)
+            user_events.registered_events.add(event_obj)
             
             return Response(status=status.HTTP_202_ACCEPTED)
         except Exception as e: 
