@@ -16,8 +16,14 @@ function Header() {
             console.log(err)
         })
     })
-    function LogOut() {
-        console.log(1)
+    function LogOut(e) {
+        e.preventDefault()
+        axios.get(API_URL + "logout", localStorage.getItem('token')).then(
+            () => {
+                localStorage.removeItem('token')
+                window.location.href = '/'
+            }
+        )
     }
     return (
         <header>
@@ -37,10 +43,10 @@ function Header() {
                 <img src={profile} alt="" className="header-img" />
                 <h1 className="header-a-h1">Профиль</h1>
                 </a>
-                <button href="" className='header-a' onClick={() => LogOut()}>
+                <a href="" className='header-a' onClick={(e) => LogOut(e)}>
                 <img src={log} alt="" className="header-img"/>
                 <h1 className="header-a-h1">Выход</h1>
-                </button>
+                </a>
             </>
             :<>
             <Link to={"/register"}>Register</Link>
