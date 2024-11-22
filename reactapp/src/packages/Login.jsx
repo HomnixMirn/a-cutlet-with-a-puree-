@@ -1,24 +1,31 @@
 import React from 'react'
 import axios from 'axios'
 import { API_URL} from '../index'
+import './Login.css'
 
 function Login()  {
 
-    function PostFormRegister(e) {
+    function PostFormLogin(e) {
         e.preventDefault()
         const data = new FormData(e.target)
-        const username = data.get('username')
+        const login = data.get('username')
         const password = data.get('password')
-        axios.post(API_URL + 'register', {username,password}).then(res => console.log(res)).catch(err => {
+        axios.post(API_URL + 'personal_info', {login,password}).then(
+            res => {
+                localStorage.setItem('token', res.data.token)
+            }
+        ).catch(err => {
             console.log(err)
         })
     }
     return (
-      <div>
-        <form action="" method="post" onSubmit={(e) => PostFormLogi(e)}>
-            <input type="text" name='username' />
-            <input type="password" name='password' />
-            <button type="submit">Register</button>
+    <div className='modal-form'>
+        <form className = 'form log' action="" method="post" onSubmit={(e) => PostFormLogin(e)}>
+            <h1 className="form-h1">Вход</h1>
+            <a href="" className="form-a">Еще нет аккаунта?</a>
+            <input type="text" name='username' placeholder="Логин" className='input-form' required/>
+            <input type="password" name='password' placeholder="Пароль" className='input-form' required/>
+            <button type="submit" className="form-button">Вход</button>
         </form>
       </div>
     )
