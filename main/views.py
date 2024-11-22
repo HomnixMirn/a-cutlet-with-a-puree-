@@ -43,17 +43,21 @@ def personal_info(request: HttpRequest):
     if request.method == 'GET':
         headers = request.headers
         token = headers.get('Authorization')
+
         if token:
             
             try:
+                
                 token = token.split(' ')[1]
+                print(token) 
                 token_obj = userToken.objects.get(key=token)
                 user_obj = token_obj.user
                 personal_info = user.objects.get(user=user_obj)
                 serializer = UserSerializer(personal_info)
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            except Token.DoesNotExist:
-                return Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)
+            except Exception as e:
+                print(e)
+                return Response({'error': e}, status=status.HTTP_401_UNAUTHORIZED)
         else:
             return Response({'error': 'No token provided'}, status=status.HTTP_401_UNAUTHORIZED)
     elif request.method == 'POST':
@@ -61,9 +65,9 @@ def personal_info(request: HttpRequest):
         try:
             login = data['login']
             password = data['password']
-            user = authenticate(username=login, password=password)
-            if user is not None:
-                token, _ = userToken.objects.get_or_create(user=user)
+            user_auth = authenticate(username=login, password=password)
+            if user_auth is not None:
+                token, _ = userToken.objects.get_or_create(user=user_auth)
                 return Response({'token': token.key}, status=status.HTTP_200_OK)
             else:
                 return Response({'error': 'Invalid login or password'}, status=status.HTTP_401_UNAUTHORIZED)
@@ -80,7 +84,8 @@ def logout(request: HttpRequest):
             token_obj = userToken.objects.get(key=token)
             token_obj.delete()
             return Response({'message': 'Logout successful'}, status=status.HTTP_200_OK)
-        except Token.DoesNotExist:
+        except Exception as e: 
+            print(e)
             return Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)
     else:
         return Response({'error': 'No token provided'}, status=status.HTTP_401_UNAUTHORIZED)

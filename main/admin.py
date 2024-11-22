@@ -16,3 +16,4 @@ class userTokenAdmin(admin.ModelAdmin):
 @admin.register(event)
 class eventAdmin(admin.ModelAdmin):
     list_display = ['num_SM', 'name', 'date_start', 'date_end', 'location', 'participants', 'age_group' ]
+    
