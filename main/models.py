@@ -24,3 +24,16 @@ class userToken (Token):
     
     def __str__(self):
         return self.user
+    
+class event(models.Model):
+    num_SM = models.IntegerField()
+    name = models.CharField(max_length=150)
+    date_start = models.DateField()
+    date_end = models.DateField()
+    location = models.CharField(max_length=150)
+    participants = models.IntegerField()
+    age_group = models.TextField()
+    description = models.TextField()
+    
+    def __str__(self):
+        return self.name
