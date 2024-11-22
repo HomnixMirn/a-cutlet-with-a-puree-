@@ -47,7 +47,7 @@ def personal_info(request: HttpRequest):
             
             try:
                 token = token.split(' ')[1]
-                token_obj = Token.objects.get(key=token)
+                token_obj = userToken.objects.get(key=token)
                 user_obj = token_obj.user
                 personal_info = user.objects.get(user=user_obj)
                 serializer = UserSerializer(personal_info)
