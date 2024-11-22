@@ -8,8 +8,8 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate 
 from .parse.sorting_data import get_data
-import json
 import re
+from datetime import datetime, timedelta
 # Create your views here.
 
 def is_valid_email(email):
@@ -43,27 +43,31 @@ def personal_info(request: HttpRequest):
     if request.method == 'GET':
         headers = request.headers
         token = headers.get('Authorization')
+
         if token:
             
             try:
+                
                 token = token.split(' ')[1]
-                token_obj = Token.objects.get(key=token)
+                print(token) 
+                token_obj = userToken.objects.get(key=token)
                 user_obj = token_obj.user
                 personal_info = user.objects.get(user=user_obj)
                 serializer = UserSerializer(personal_info)
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            except Token.DoesNotExist:
-                return Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)
+            except Exception as e:
+                print(e)
+                return Response( status=status.HTTP_204_NO_CONTENT)
         else:
-            return Response({'error': 'No token provided'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response( status=status.HTTP_204_NO_CONTENT)
     elif request.method == 'POST':
         data = request.data
         try:
             login = data['login']
             password = data['password']
-            user = authenticate(username=login, password=password)
-            if user is not None:
-                token, _ = userToken.objects.get_or_create(user=user)
+            user_auth = authenticate(username=login, password=password)
+            if user_auth is not None:
+                token, _ = userToken.objects.get_or_create(user=user_auth)
                 return Response({'token': token.key}, status=status.HTTP_200_OK)
             else:
                 return Response({'error': 'Invalid login or password'}, status=status.HTTP_401_UNAUTHORIZED)
@@ -80,23 +84,76 @@ def logout(request: HttpRequest):
             token_obj = userToken.objects.get(key=token)
             token_obj.delete()
             return Response({'message': 'Logout successful'}, status=status.HTTP_200_OK)
-        except Token.DoesNotExist:
+        except Exception as e: 
+            print(e)
             return Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)
     else:
         return Response({'error': 'No token provided'}, status=status.HTTP_401_UNAUTHORIZED)
-    
-@api_view(['GET'])
-def get_events(request: HttpRequest):
-    events = event.objects.all()
-    serializer = EventSerializer(events, many=True)
-    if len(serializer.data) <= 10:
-        data = get_data()
-        for item in data:
+
+def create_event():
+    data = get_data()
+    for item in data:
 
             event.objects.get_or_create(**item)
-        events = event.objects.all()
-        serializer = EventSerializer(events, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+def get_events(request: HttpRequest, page: int = 0):
+    if request.method == 'GET':
+        events = event.objects.all()
+        get = request.GET
+        
+        serializer = EventSerializer(events, many=True)
+        if len(serializer.data) < 10:
+            create_event()
+            
+        events = event.objects.all()
+        if 'filters' in get:
+            filters = request.GET['filters'].split(',')
+
+            try:
+                events = events.filter(Q(*[Q(age_group__icontains=filter.lower())  for filter in filters],_connector='OR'))
+            except Exception as e:
+                print(e)
+        if "time" in get:
+            time = request.GET['time']
+            times = {
+                'next_day' : datetime.now() + timedelta(days=1),
+                'next_week' : datetime.now() + timedelta(days=7),
+                'next_month' : datetime.now() + timedelta(days=30),
+                'next_quarter' : datetime.now() + timedelta(days=90),
+                'next_half_year' : datetime.now() + timedelta(days=180),
+            }
+            try:
+                events = events.filter(date_start__lte=times[time])
+            except Exception as e:
+                print(e)
+        if 'search' in get:
+            search = request.GET['search']
+            try:
+                events = events.filter(Q(Q(location__contains=search.lower()) | Q(location__contains=search.upper()) | Q(location__contains=search.title())) | Q((Q(name__icontains=search.lower()) | Q(name__icontains=search.upper()) | Q(name__icontains=search.title()))))
+            except Exception as e:
+                print(e)
+        serializer = EventSerializer(events, many=True)
+        try:
+            page = int(page)
+        except:
+            page = 0
+        return Response(serializer.data[page*10:(page+1)*10], status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def get_event(request: HttpRequest, id: int):
+    try:
+        event_obj = event.objects.get(id=id)
+        serializer = EventSerializer(event_obj)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def get_latest_event(request: HttpRequest):
+    events = event.objects.all().order_by('-date_start')[:2]
+    serializer = EventSerializer(events, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
     
     

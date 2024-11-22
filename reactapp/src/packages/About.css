@@ -1,0 +1,72 @@
+.main-about{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 812px;
+    background-image: url(../static/img/Size-about.png);
+}
+.h1-about{
+    font-family: Bold;
+}
+.name-cart{
+    font-family: Bold;
+    text-align: center;
+    color: white;
+}
+.about-02{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 700px;
+    justify-content: space-evenly;
+}
+.three-cart{
+    display: flex;
+    justify-content: space-between;
+}
+.p-class{
+    font-family: Light;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 130px;
+    margin-left: 15px;
+    color: white;
+}
+
+
+.cart-two1{
+    width: 330px;
+    height: 404px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    margin-right: 85px;
+    background-image: url(../static/img/Image1.png);
+}
+.cart-two2{
+    width: 330px;
+    height: 404px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    margin-right: 85px;
+    background-image: url(../static/img/Image2.png);
+}
+.cart-two3{
+    width: 330px;
+    height: 404px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    margin-right: 85px;
+    background-image: url(../static/img/Image3.png);
+}
+.date-about{
+    font-family: Bold;
+    color: white;
+    display: flex;
+    justify-content: center;
+    width: 325px;
+    margin-top: 20px;
+}
