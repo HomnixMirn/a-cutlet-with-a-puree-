@@ -1,30 +1,51 @@
-from io import StringIO
-from pdfminer.converter import TextConverter
-from pdfminer.layout import LAParams
-from pdfminer.pdfdocument import PDFDocument
-from pdfminer.pdfpage import PDFPage
-from pdfminer.pdfparser import PDFParser
-from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
+import pdfplumber
+import re
 
-def extract_text_from_pdf(file_path):
-    output_string = StringIO()
+from datetime import datetime
 
-    with open(file_path, 'rb') as in_file:
-        parser = PDFParser(in_file)
-        doc = PDFDocument(parser)
-        rsrcmgr = PDFResourceManager()
-        device = TextConverter(rsrcmgr, output_string, laparams=LAParams())
-        interpreter = PDFPageInterpreter(rsrcmgr, device)
-        for page in PDFPage.create_pages(doc):
-            interpreter.process_page(page)
+def pdf_to_txt(pdf_file_path, txt_file_path):
+    with open(txt_file_path, 'w', encoding='utf-8') as out_file:
+        with pdfplumber.open(pdf_file_path) as pdf:
+            text = ''
+            date = datetime.now().strftime('%d.%m.%Y')
+            date = datetime.strptime(date.strip(), '%d.%m.%Y').date()
+            start = False
+            printable = True
+            for page in pdf.pages:
+                
+                text_page = page.extract_text()
+                for line in text_page.split('\n'):
+                    lin = []
+                    if line == "ЕКП (дисциплина, программа) (спортивная база, центр) (чел.)":
+                        start = True
+                        continue
+                    if start:
+                        
+                        if line.strip() != '':
+                            for word in line.split(' '):
+                                if len(word) ==16 and word.isdigit():
+                                    word = 'START : ' + word
+                                    printable = True
+                                
+                                
+                                if re.match(r"\d{2}\.\d{2}\.\d{4}", word.strip()):
+                                    date_line = datetime.strptime(word.strip(), '%d.%m.%Y').date()
+                                    if date_line < date:
+                                        printable = True
+                                        
+                            
+                                lin.append(word)
+                            if printable:      
+                                out_file.write(' '.join(lin) + '\n\n')
+                break
 
-    return output_string.getvalue()
+                
+        
+            
 
 pdf_file_path = 'main/1.pdf'
-text = extract_text_from_pdf(pdf_file_path)
+txt_file_path = 'output.txt'
+pdf_to_txt(pdf_file_path, txt_file_path)
 
-# Записываем результат в файл
-with open('output.txt', 'w', encoding='utf-8') as out_file:
-    out_file.write(text)
+print('PDF-файл преобразован в TXT-файл')
 
-print('Результат записан в файл output.txt')
