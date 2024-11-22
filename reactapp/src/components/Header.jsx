@@ -33,7 +33,9 @@ function Header() {
                 <img src={info} alt="" className="header-img"/>
                 <h1 className="header-a-h1">О нас</h1>
             </a>
-            <a href="" className='header-a'>
+            <a href="" className='header-a' onClick={(e) => {
+                e.preventDefault()
+            }}  >
                 <img src={calendar} alt="" className="header-img" />
                 <h1 className="header-a-h1">Календарь</h1>
             </a>
