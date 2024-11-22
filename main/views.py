@@ -183,4 +183,4 @@ def add_personal_event(request: HttpRequest):
             return Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)
     else:
         return Response({'error': 'No token provided'}, status=status.HTTP_401_UNAUTHORIZED)
-    
+     
