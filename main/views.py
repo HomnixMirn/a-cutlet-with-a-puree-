@@ -11,6 +11,7 @@ from .parse.sorting_data import get_data
 import re
 from datetime import datetime, timedelta
 from .utils import send_email
+import random
 
 # Create your views here.
 
@@ -140,7 +141,7 @@ def get_events(request: HttpRequest, page: int = 0):
             page = int(page)
         except:
             page = 0
-        return Response(serializer.data[page*10:(page+1)*10], status=status.HTTP_200_OK)
+        return Response({"pages": len(serializer.data)//10,  'events': serializer.data[page*10:(page+1)*10]}, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
@@ -148,7 +149,9 @@ def get_event(request: HttpRequest, id: int):
     try:
         event_obj = event.objects.get(id=id)
         serializer = EventSerializer(event_obj)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        random_quotes = quote.objects.get(id=random.randint(1, len(quote.objects.all())))
+        QuotesSerializer= QuoteSerializer(event_obj.get_quotes())
+        return Response({"event":serializer.data, "quotes": QuotesSerializer.data}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 

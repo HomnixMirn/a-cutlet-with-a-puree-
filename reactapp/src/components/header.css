@@ -31,13 +31,14 @@ header{
     border-radius: 12px;
 }
 
+
 .header-a:focus > .header-a-h1,
 .header-a:hover > .header-a-h1 {
     color: rgba(20, 20, 20, 1);
 }
 
-.header-a:focus .header-img-hover,
-.header-a:hover .header-img-hover {
+.header-a:focus >.header-img-hover,
+.header-a:hover > .header-img-hover {
     opacity: 1;
     z-index: 2;
 }
@@ -107,4 +108,25 @@ header{
     text-decoration: none;
     color: rgba(255, 255, 255, 0.6);
     font-family: bold;
+}
+
+
+.active-header{
+    background-color: #fff;
+    border-radius: 12px;
+    color: rgba(20, 20, 20, 1);
+}
+
+.active-header-img{
+    opacity: 0;
+    z-index: -1;
+}
+
+.active-header-img-hover{
+    opacity: 1;
+    z-index: 2;
+}
+
+.active-header-h1{
+    color: rgba(20, 20, 20, 1);
 }

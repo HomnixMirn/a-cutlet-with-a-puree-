@@ -7,6 +7,7 @@ import Header from './components/Header';
 import Cart from './packages/Cart';
 import About from './packages/About';
 import Calendar from './packages/Calendar';
+import LK from './packages/LK';
 import Activity from './packages/ActivCart';
 
 function App() {
@@ -20,6 +21,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/personal_info" element={<Login />} />
+          <Route path='/user' element={<LK/>}/>
+        </Routes>
           <Route path="/event/:id" element={<Activity />} /></Routes>
       </main>
       <Footer/>

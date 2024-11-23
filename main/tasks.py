@@ -7,7 +7,6 @@ import time
 from load_dotenv import load_dotenv
 load_dotenv()
 from main.models import user
-
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
