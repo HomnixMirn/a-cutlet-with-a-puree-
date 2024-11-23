@@ -39,3 +39,24 @@ color: rgba(255, 255, 255, 0.6);
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.6);
 }
+.ul-header{
+    background-color: white;
+    border-radius: 15px;
+    height: 50px;
+    width: 238px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.register{
+    text-transform: uppercase;
+    text-decoration: none;
+    color: black;
+    font-family: bold;
+}
+.personal_info{
+    text-transform: uppercase;
+    text-decoration: none;
+    color: black;
+    font-family: bold;
+}

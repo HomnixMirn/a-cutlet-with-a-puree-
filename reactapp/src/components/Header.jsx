@@ -49,8 +49,10 @@ function Header() {
                 </a>
             </>
             :<>
-            <Link to={"/register"}>Register</Link>
-            <Link to={"/personal_info"}>Login</Link>
+            <ul className="ul-header">
+                <Link to={"/personal_info"} className="personal_info">Вход</Link>
+                <Link to={"/register"} className="register">/Регистрация</Link>
+            </ul>
             </>
             }
             </div>
