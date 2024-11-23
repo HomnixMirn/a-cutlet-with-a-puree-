@@ -67,8 +67,9 @@ function Calendar()  {
                     <input type="text" placeholder="Поиск" className='input-poisk' value={search}
                     onChange={(e) => {
                         
-                        console.log(e.target.value)
+                        
                         setSearch(e.target.value);
+                        console.log(search)
                         axios.get(API_URL + page_num + '/get_events', {
                         params: {
                             filters: filters.join(','),
@@ -88,7 +89,7 @@ function Calendar()  {
                     </div>
                 </div>
             </form>
-            <button className="check-filter" onClick={() => setCheckModal(!checkModal)}>
+             <button className="check-filter" /*onClick={() => setCheckModal(!checkModal)*/> 
                 <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M37 1H1L15.4 19.92V33L22.6 37V19.92L37 1Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
