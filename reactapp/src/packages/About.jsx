@@ -3,6 +3,7 @@ import './About.css'
 
 
 function About(){
+    
     return (
       <div className="main-about">
         <div className="about-02">
@@ -11,10 +12,11 @@ function About(){
                     <div className="cart-two1">
                         <p className="name-cart">ТУРНИР ПО БАСКЕДБОЛУ</p>
                         <div className="p-class">
-                                <p className="about-cart">Вид:</p>
-                                <p className="about-cart">Место проведения:</p>
-                                <p className="about-cart">Тип моревнования:</p>
-                            </div>
+                            <p className="about-cart">Место проведения:</p>
+                        </div>
+                        <div className="div__about-button">
+                                <button type="submit" className="about-button">ПОДРОБНЕЕ</button>
+                            </div>    
                         <div className="date-about">
                                 <p className="p-date">05.05.2222</p>
                             </div>
@@ -22,9 +24,10 @@ function About(){
                         <div className="cart-two2">
                             <p className="name-cart">ТУРНИР ПО БАСКЕДБОЛУ</p>
                             <div className="p-class">
-                                <p className="about-cart">Вид:</p>
                                 <p className="about-cart">Место проведения:</p>
-                                <p className="about-cart">Тип моревнования:</p>
+                            </div>
+                            <div className="div__about-button">
+                                <button type="submit" className="about-button">ПОДРОБНЕЕ</button>
                             </div>
                             <div className="date-about">
                                 <p className="p-date">05.05.2222</p>
@@ -33,10 +36,11 @@ function About(){
                         <div className="cart-two3">
                             <p className="name-cart">ТУРНИР ПО БАСКЕДБОЛУ</p>
                             <div className="p-class">
-                                <p className="about-cart">Вид:</p>
                                 <p className="about-cart">Место проведения:</p>
-                                <p className="about-cart">Тип моревнования:</p>
-                        </div>
+                            </div>
+                            <div className="div__about-button">
+                                <button type="submit" className="about-button">ПОДРОБНЕЕ</button>
+                            </div>
                         <div className="date-about">
                                 <p className="p-date">05.05.2222</p>
                             </div>
