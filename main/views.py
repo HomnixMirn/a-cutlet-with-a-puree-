@@ -150,7 +150,7 @@ def get_event(request: HttpRequest, id: int):
         event_obj = event.objects.get(id=id)
         serializer = EventSerializer(event_obj)
         random_quotes = quote.objects.get(id=random.randint(1, len(quote.objects.all())))
-        QuotesSerializer= QuoteSerializer(event_obj.get_quotes())
+        QuotesSerializer= QuoteSerializer(random_quotes)
         return Response({"event":serializer.data, "quotes": QuotesSerializer.data}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
