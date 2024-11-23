@@ -13,7 +13,38 @@
     font-family: Bold;
     text-align: center;
     color: white;
+    height: auto;
+    width: auto;
+    text-overflow: ellipsis; /* will make [...] at the end */
+    width: 324px; /* change to your preferences */
+    white-space: nowrap; /* paragraph to one line */
+    overflow:hidden; /* older browsers */
 }
+.name-cart {
+    padding: 5px 5px 5px 5px;
+   border-radius: 10px;
+   height: 20px;
+   position: relative;
+   transition: height 0.5s;
+   -webkit-transition: height 0.5s;
+   text-align: center;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   font-size: 14px;
+   font-weight: 500;
+   letter-spacing: 1px;
+   line-height: normal;
+   outline: 0 none;
+   text-decoration: none;
+   text-transform: uppercase;
+  }
+  .name-cart:hover {
+  overflow: visible;
+  white-space: normal;
+  height: auto;
+  }
+
 .about-02{
     display: flex;
     flex-direction: column;
@@ -39,9 +70,8 @@
     color: white;
 }
 
-
 .cart-two1{
-    width: 324px;
+    width: 330px;
     height: 404px;
     display: flex;
     justify-content: space-evenly;
@@ -49,7 +79,7 @@
     background-image: url(../static/img/Image1.png);
 }
 .cart-two2{
-    width: 324px;
+    width: 330px;
     height: 404px;
     display: flex;
     justify-content: space-evenly;
@@ -57,7 +87,7 @@
     background-image: url(../static/img/Image2.png);
 }
 .cart-two3{
-    width: 324px;
+    width: 330px;
     height: 404px;
     display: flex;
     justify-content: space-evenly;
