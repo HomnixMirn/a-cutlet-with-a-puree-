@@ -18,4 +18,9 @@ html{
   display: flex;
   flex-direction: column;
   align-items: center;
+  
+}
+
+body{
+  min-height: 1139px;
 }
