@@ -49,9 +49,10 @@ function Header() {
             { localStorage.getItem('token')
             ?<>
             <Link to={'/user'} className={location === '/user' ? 'active-header header-a ' : 'header-a'}>
-                <img src={profile} alt="" className="header-img" />
+                <img src={profile} alt="" className={location === '/user' ? 'active-header-img header-img ' : 'header-img'}/>
+                <img src={profile2} alt="" className={location === '/user' ? 'active-header-img-hover header-img-hover ' : 'header-img-hover'}/>
                 <h1 className="header-a-h1">Профиль</h1>
-                </a>
+            </Link>
                 <a href="" className='header-a' onClick={(e) => LogOut(e)}>
                 <img src={log} alt="" className="header-img"/>
                 <img src={log2} alt="" className="header-img-hover"/>
