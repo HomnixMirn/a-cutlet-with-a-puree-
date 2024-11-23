@@ -84,11 +84,6 @@ main{
     margin-top: 18px;
 }
 
-.activity-data{
-    display: flex;
-    flex-direction:row;
-}
-
 .div_activity-score{
     width: 265px;
     height: 226px;
@@ -148,6 +143,9 @@ main{
     border-radius: 16px;
     padding-left: 10px;
     padding-top: 10px;
+    font-family: Light;
+    font-weight: 700;
+    font-size: 16px;
 }
 
 .div__activity-button{
@@ -167,4 +165,44 @@ main{
     font-weight: 700;
     font-size: 18px;
     color: #FFFFFF;
+}
+
+.activity-data{
+    width: 338px;
+    height: 58px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction:row;
+    background-color: rgba(20, 20, 20, 0.8);
+}
+
+.activity__date-start{
+    width: 130px;
+    height: 33px;
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    font-family: Light;
+    font-weight: 700;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.activity__date-tire{
+    width: 30px;
+    height: 33px;
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    font-family: Light;
+    font-weight: 700;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-left: 5px;
+    margin-right: 5px;
 }
