@@ -7,6 +7,7 @@ import Header from './components/Header';
 import Cart from './packages/Cart';
 import About from './packages/About';
 import Calendar from './packages/Calendar';
+import Activity from './packages/ActivCart';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/personal_info" element={<Login />} />
-        </Routes>
+          <Route path="/event/:id" element={<Activity />} /></Routes>
       </main>
       <Footer/>
     </div>
