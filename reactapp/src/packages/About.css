@@ -3,7 +3,6 @@
     flex-direction: column;
     align-items: center;
     height: 812px;
-    background-image: url(../static/img/Size-about.png);
 }
 .h1-about{
     font-family: Bold;
