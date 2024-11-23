@@ -3,6 +3,7 @@ import React from 'react'
 import axios from 'axios'
 import { API_URL} from '../index'
 import './Register.css'
+import { data } from 'react-router-dom';
 
 
 function validateForm(data) {
@@ -25,6 +26,7 @@ function validateForm(data) {
     }
     return errors;
   }
+
   function Register() {
     const [errors, setErrors] = useState({});
   
@@ -54,6 +56,38 @@ function validateForm(data) {
           });
       }
     }
+
+    function Error(){
+      const data = new FormData(data);
+      const axiosInstance = axios.create({
+        baseURL: API_URL,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        validateStatus: status => {
+          return status >= 200 && status < 300;
+        }
+      });
+      
+      axiosInstance.post('register', data)
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.error(error);
+          const errorMessage = error.response.data.message;
+          const errorDetails = error.response.data.details;
+          if (errorMessage) {
+            alert(errorMessage);
+          }
+          if (errorDetails) {
+            console.log(errorDetails);
+            setErrors(errorDetails);
+          }
+        });
+    }
+    
+
     return (
         <div className='modal-form'>
         <form className='form' action="" method="post" onSubmit={(e) => PostFormRegister(e)}>
