@@ -102,6 +102,20 @@
     line-height: 125%;
     color: black;
 }
+
+.but-filter.selected:hover,
+.but-filter.selected:focus,
+.but-filter:hover.selected,
+.but-filter:focus.selected {
+  background: rgba(199, 199, 199, 0.719);
+}
+
+
+.but-sort:focus,
+.but-sort:hover{
+    background: rgba(255, 255, 255, 1);
+}
+
 .filter-h1, .sort-h1{
     font-family: Bold;
     font-weight: 700;
