@@ -32,7 +32,7 @@ def register(request: HttpRequest):
         email = data['email']
         time_zone = data['time_zone']
         print(f'username: {username}, password: {password}, email: {email}, time_zone: {time_zone}')
-        if is_valid_email(email):
+        if is_valid_email(email) and not User.objects.filter(email=email).exists():
             print(User.objects.filter(Q(username=username)))
             if User.objects.filter(Q(username=username)):
                 return Response({'error': 'User already exists'}, status=status.HTTP_400_BAD_REQUEST)

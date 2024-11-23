@@ -176,10 +176,11 @@ main{
     text-align: center;
     flex-direction:row;
     background-color: rgba(20, 20, 20, 0.8);
+    border-radius: 16px;
 }
 
 .activity__date-start{
-    width: 130px;
+    width: 286px;
     height: 33px;
     background-color: #FFFFFF;
     border-radius: 16px;
@@ -190,6 +191,7 @@ main{
     justify-content: center;
     align-items: center;
     text-align: center;
+    
 }
 .activity__date-tire{
     width: 30px;
