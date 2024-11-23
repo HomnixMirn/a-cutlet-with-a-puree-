@@ -1,12 +1,13 @@
-
 .main-about{
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 812px;
+    background-image: url(../static/img/Size-about.png);
 }
 .h1-about{
     font-family: Bold;
+    margin-top: 84px;
 }
 .name-cart{
     font-family: Bold;
@@ -17,49 +18,50 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 700px;
-    justify-content: space-evenly;
+    justify-content: center;
+    height: 523px;
+    width: 1104px;
 }
 .three-cart{
     display: flex;
     justify-content: space-between;
+    margin-top: 78px;
+    width: 1104px;
+    height: 405px;
 }
 .p-class{
     font-family: Light;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    height: 130px;
+    height: 140px;
+    width: 271px;
     margin-left: 15px;
     color: white;
 }
 
 
 .cart-two1{
-    width: 330px;
+    width: 324px;
     height: 404px;
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;
-    margin-right: 85px;
     background-image: url(../static/img/Image1.png);
 }
 .cart-two2{
-    width: 330px;
+    width: 324px;
     height: 404px;
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;
-    margin-right: 85px;
     background-image: url(../static/img/Image2.png);
 }
 .cart-two3{
-    width: 330px;
+    width: 324px;
     height: 404px;
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;
-    margin-right: 85px;
     background-image: url(../static/img/Image3.png);
 }
 .date-about{
@@ -70,3 +72,22 @@
     width: 325px;
     margin-top: 20px;
 }
+.div__about-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.about-button{
+    width: 155px;
+    height: 50px;
+    padding: 15px;
+    background:rgba(117, 117, 117, 0.5);
+    font-family: Bold;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 125%;
+    color: rgb(255, 255, 255);
+    border:none;
+    outline: none;
+    border-radius: 16px;
+}    

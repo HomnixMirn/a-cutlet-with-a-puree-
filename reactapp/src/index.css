@@ -23,7 +23,7 @@ html{
 }
 
 body{
-  background-image: url(./static/img/Size-about.png);
+  background-image: url(./static/img/Size-about.png); 
   background-size: 1920px 115%;
   background-position: center;
   background-repeat: no-repeat;
