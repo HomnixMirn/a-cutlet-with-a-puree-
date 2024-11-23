@@ -7,7 +7,9 @@ import { API_URL,API_MEDIA } from '..';
 function Activity({ }){
     const [event,setEvent] = useState([])
     const {id}  = useParams();
+    const navigate = useNavigate();
     console.log(id)
+
     useEffect(()=>{
         axios.get(
             API_URL + "get_event/" + id,{id}
@@ -22,6 +24,27 @@ function Activity({ }){
     )
     const dataEvent = event.event ?? [] 
     const dataQuotes = event.quotes ?? [] 
+
+    const handleRegister = () => {
+        const token = localStorage.getItem('token'); // Предполагается, что токен хранится в localStorage
+        if (!token) {
+            console.log('No token provided');
+            return;
+        }
+
+        axios.post(`${API_URL}add_personal_event`, { id }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            console.log('Event registered successfully');
+            navigate('/user');
+        })
+        .catch((error) => {
+            console.log('Error registering event:', error.response.data);
+        });
+    };
 return(
 
     <div className ="main-activity">
@@ -45,7 +68,7 @@ return(
                             <p className="p-number">{dataEvent.participants}</p>
                         </div>
                     <div className="div__activity-button">
-                        <button type = "submit" className="activity-button">Записаться</button>
+                        <button type = "submit" className="activity-button"  onClick={handleRegister}  >Записаться</button>
                     </div>
                     </div>
                     <div className="activity-qoute">
