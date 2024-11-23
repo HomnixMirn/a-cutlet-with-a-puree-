@@ -79,9 +79,7 @@ return(
             </div>
         </div>
         <div className="activity-data">
-        <p className="activity__date-start">{dataEvent.date_start}</p>
-        <p className="activity__date-tire">-</p>
-        <p className="activity__date-start">{dataEvent.date_end}</p>
+        <p className="activity__date-start">{dataEvent.date_start} - {dataEvent.date_end}</p>
         </div>
 
 
