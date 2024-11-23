@@ -1,4 +1,4 @@
-import { useEffect , useState,useRef} from 'react'
+import { useEffect , useState,useRef , useCallback} from 'react'
 import poisk from '../static/img/poisk.png'
 import './Calendar.css'
 import {API_URL} from '../index'
@@ -15,20 +15,21 @@ function Calendar()  {
     const filtersRef = []
     const searchRef = []
     const timesRef = ''
-    const page_num = 0
+    const page_numRef = 0
+    const [page_num, setPage_num] = useState(useRef(page_numRef)['current']);
     const filters = useRef(filtersRef)['current'];
     const [search, setSearch] = useState(useRef(searchRef)['current']);
     const [times, setTimes] =useState(useRef(timesRef)['current']) ;
-
+    const [pages, setPages] = useState([])
     console.log(times);
     
     
 
     useEffect(() => {
-        axios.get(API_URL + page_num+ '/get_events', {params: {"filters":filters.join(','), "search":search, "time":times}} ).then(res => setEvents(res.data)).catch(err => console.log(err))
+        axios.get(API_URL + page_num+ '/get_events', {params: {"filters":filters.join(','), "search":search, "time":times}} ).then(res =>acceptData(res)).catch(err => console.log(err))
     }, [])
     console.log(events)
-    console.log(  {params: {"filters":filters.join(','), "search":search, "time":times}})
+    console.log(pages)
 
     function handleClick(name) {
         try{
@@ -53,10 +54,42 @@ function Calendar()  {
         console.log(times)
     }
 
-
+    const fetchEvents = useCallback(() => {
+        axios.get(API_URL + page_num + '/get_events', {
+          params: {
+            filters: filters.join(','),
+            search: search,
+            time: times
+          }
+        })
+        .then(res => acceptData(res))
+        .catch(err => console.log(err))
+      }, [page_num,search])
 
     function acceptfilters(){
-        axios.get(API_URL + page_num+ '/get_events', {params: {"filters":filters.join(','), "search":search, "time":times}} ).then(res => setEvents(res.data)).catch(err => console.log(err))
+        axios.get(API_URL + page_num+ '/get_events', {params: {"filters":filters.join(','), "search":search, "time":times}} ).then(res => acceptData(res) ).catch(err => console.log(err))
+    }
+
+    function acceptData(res){
+        for(let i=0; i<2;i++){
+            setEvents(res.data['events'])
+            const pagss =[]
+            for (let i=0;i<res.data['pages'];i++){
+                pagss.push(i)
+            }
+            setPages(pagss)
+
+        }
+        
+    }
+
+    function next_page(page){
+        if (page >= pages.length || page < 0){
+            return
+        }
+        setPage_num(page)
+        fetchEvents()
+
     }
     return (
     <div className='mega-block'>
@@ -69,16 +102,8 @@ function Calendar()  {
                         
                         
                         setSearch(e.target.value);
-                        console.log(search)
-                        axios.get(API_URL + page_num + '/get_events', {
-                        params: {
-                            filters: filters.join(','),
-                            search: search,
-                            time: times
-                        }
-                        })
-                        .then(res => setEvents(res.data))
-                        .catch(err => console.log(err))
+                        fetchEvents()
+                        
                     }} />
 
                     
@@ -150,7 +175,19 @@ function Calendar()  {
                                 </div>
                              </div>
                         </div>))}
+
+                        <div className="pages">
+                            <div className="page_number arrow" onClick={() => next_page(page_num-1)}>←</div>
+                                <div className={`page_number ${0 === page_num ? 'active' : ''}`} onClick={() => next_page(0)}>1</div>
+                                {pages.slice(Math.max(0, page_num - 2), Math.min(pages.length-1, page_num + 3)).map((page, index) => (
+            page+1  === 1 ? '' : <div key={index} className={`page_number ${page === page_num ? 'active' : ''}`} onClick={() => next_page(page)}>{page+1}</div>
+            ))}
+
+                                <div className={`page_number ${pages.length - 1 === page_num ? 'active' : ''}`} onClick={() => next_page(pages[pages.length - 1] )}>{pages[pages.length - 1] + 1}</div>
+                            <div className="page_number arrow" onClick={() => next_page(page_num+1)}>→</div>
+                        </div>
             </div>
+            
         </div>
     </div>
     )
