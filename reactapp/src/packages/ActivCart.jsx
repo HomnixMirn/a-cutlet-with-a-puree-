@@ -29,6 +29,7 @@ function Activity({ }){
         const token = localStorage.getItem('token'); // Предполагается, что токен хранится в localStorage
         if (!token) {
             console.log('No token provided');
+            navigate('/register')
             return;
         }
 
