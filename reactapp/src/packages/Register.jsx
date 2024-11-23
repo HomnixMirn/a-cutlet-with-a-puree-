@@ -23,7 +23,7 @@ function Register()  {
             <form className = 'form' action="" method="post" 
             onSubmit={(e) => PostFormRegister(e)}>
                 <h1 className="form-h1">Регистрация</h1>
-                <a href="" className="form-a">Уже есть аккаунт?</a>
+                <a href="/personal_info" className="form-a">Уже есть аккаунт?</a>
                 <div className="form-mini-block">
                     <input type="text" name="name" placeholder="Имя" className='input-form' required/>
                     <input type="text" name='username' placeholder="Логин" className='input-form' required/>
