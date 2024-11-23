@@ -50,5 +50,5 @@ def send_email():
                 except Exception as _ex:
                     return f'{_ex}\n Проверьте правильно ли указанны ваши данные'
         server.quit()
-        time.sleep(1)
+        time.sleep(3600)
     

@@ -11,6 +11,13 @@ function Calendar()  {
     // const headers = {Authorization: 'Token ' + localStorage.getItem('token')}
     // axios.post(API_URL + 'add_personal_event', {'id':id} ,   {headers: {'Authorization': 'Token ' + localStorage.getItem('token')}}).then(res => console.log( )).catch(err => console.log(err))
 
+    const [events, setEvents] = useState([])
+    const filters = {}
+    const page_num = 10
+    useEffect(() => {
+        axios.get(API_URL + page_num+ '/get_events').then(res => setEvents(res.data)).catch(err => console.log(err))
+    }, [])
+    console.log(events)
     return (
     <div className='mega-block'>
         <div className="calendar-top">
@@ -57,8 +64,8 @@ function Calendar()  {
                 <button class="button-form-filterSort">Применить</button>
             </div>
             <div className="calendars"> 
-                <div className="calendar-cart">
-                    <div className="calendar-cart-top">
+                
+                    {/* <div className="calendar-cart-top">
                         <h1 className="h1-cart">DD/MM/YYYY</h1>
                         <div className="prev-cart"></div>
                         <h1 className="h1-cart">XX:XX</h1>
@@ -67,8 +74,23 @@ function Calendar()  {
                     </div>
                     <div className="calendar-cart-bottom">
                         <h1 className="opis-cart">Описание</h1>
-                    </div>
-                </div>
+                    </div> */}
+                    {events.map(event => (
+                        <div className="calendar" /*key={event.id} onClick={() => window.location.href = '/personal_event/' + event.id}*/ >
+                    
+                            <div className="calendar-cart">
+                                <div className="calendar-cart-top">
+                                    <h1 className="h1-date">{event.date_start} <br></br> {event.date_end}</h1>
+                                    <div className="name-location">
+                                        <h1 className="h1-name">{event.name}</h1>
+                                        <h1 className="h1-location">{event.location}</h1>
+                                    </div>
+                                </div>
+                                <div className="calendar-cart-bottom">
+                                    <h1 className="opis-cart">{event.description} , {event.age_group}</h1>
+                                </div>
+                             </div>
+                        </div>))}
             </div>
         </div>
     </div>
