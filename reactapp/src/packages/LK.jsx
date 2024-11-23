@@ -4,9 +4,10 @@ import './LK.css'
 import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function LK()  {
-
+    const navigate = useNavigate();
     const [user_data, setUser_data] = useState({})
     const [events, setEvents] = useState([])
 
@@ -28,6 +29,10 @@ function LK()  {
         setEvents(res.data['get_events'])
     }
     console.log(user_data)
+
+    const handleDetailsClick = (id) => {
+        navigate(`/event/${id}`);
+    };
 
     return (
         
@@ -55,7 +60,7 @@ function LK()  {
                                     </div>
                                     <div className="buttons">
                                         {/* TODO: переход на подробнее */}
-                                        <button className="button_delete">подробнее</button>
+                                        <button onClick={() => {handleDetailsClick(event.id)}} className="button_delete">подробнее</button>
                                         <button onClick={() => {axios.post(API_URL + 'delete_personal_event', {id: event.id} , {  headers: {'Authorization': 'Token ' + localStorage.getItem('token')}}).then(res => {window.location.href = '/user'})}} className="button_open">отменить</button>
                                     </div>
                                 </div>

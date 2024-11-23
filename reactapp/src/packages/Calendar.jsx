@@ -146,11 +146,11 @@ function Calendar()  {
                 <div className="sort">
                     <h1 className="sort-h1">Мероприятие</h1>
                     <div className="buts-sort">
-                        <button onClick={() => handleTime('next_day')} className="but-sort">Ближайшие</button>
-                        <button onClick={() => handleTime('next_week')} className="but-sort">Текущей недели</button>
-                        <button onClick={() => handleTime('next_month')} className="but-sort">Следующего месяца</button>
-                        <button onClick={() => handleTime('next_quarter')} className="but-sort">Квартал</button>
-                        <button onClick={() => handleTime('next_half_year')} className="but-sort">Полугодия</button>
+                        <button onClick={() => handleTime('next_day')} className={times === 'next_day' ? 'but-sort selected' : 'but-sort'}>Ближайшие</button>
+                        <button onClick={() => handleTime('next_week')} className={times === 'next_week' ? 'but-sort selected' : 'but-sort'}>Текущей недели</button>
+                        <button onClick={() => handleTime('next_month')} className={times === 'next_month' ? 'but-sort selected' : 'but-sort'}>Следующего месяца</button>
+                        <button onClick={() => handleTime('next_quarter')} className={times === 'next_quarter' ? 'but-sort selected' : 'but-sort'}>Квартал</button>
+                        <button onClick={() => handleTime('next_half_year')} className={times === 'next_half_year' ? 'but-sort selected' : 'but-sort'}>Полугодия</button>
                     </div>
                 </div>
                 <div className="prev-filterSort"></div>
