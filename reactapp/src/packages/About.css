@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     height: 812px;
+    width: 1920px;
     background-image: url(../static/img/Size-about.png);
 }
 .h1-about{
