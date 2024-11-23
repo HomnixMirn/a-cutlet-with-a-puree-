@@ -1,5 +1,5 @@
 import './header.css'
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import info from "../static/img/Info.png"
 import info2 from "../static/img/Info2.png"
@@ -11,13 +11,20 @@ import { API_URL } from '..';
 import axios from 'axios';
 
 function Header() {
+
+    const [user_data, setUser_data] = useState({})
+
     useEffect(() => {
+        if (!localStorage.getItem('token')) return
         axios.get(API_URL + 'personal_info', {  headers: {'Authorization': 'Token ' + localStorage.getItem('token')}}).then(res => {
-            const data = res.data
+            if (res.status !== 200) localStorage.removeItem('token')
+
+            setUser_data(res.data)
+
         }).catch(err => {
-            console.log(err)
-        })
-    })
+            localStorage.removeItem('token')
+        } )
+    }, [])
     function LogOut(e) {
         e.preventDefault()
         axios.get(API_URL + "logout",{  headers: {'Authorization': 'Token ' + localStorage.getItem('token')}}).then(
@@ -45,7 +52,7 @@ function Header() {
             ?<>
                 <a href="" className='header-a'>
                 <img src={profile} alt="" className="header-img" />
-                <h1 className="header-a-h1">Профиль</h1>
+                <Link to={'/user'} className="header-a-h1 header-a">Профиль</Link>
                 </a>
                 <a href="" className='header-a' onClick={(e) => LogOut(e)}>
                 <img src={log} alt="" className="header-img"/>

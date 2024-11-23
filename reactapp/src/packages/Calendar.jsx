@@ -185,7 +185,7 @@ function Calendar()  {
                                 </div>
                              </div>
                         </div>))}
-
+                        {}
                         <div className="pages">
                             <div className="page_number arrow" onClick={() => next_page(page_num-1)}>←</div>
                                 <div className={`page_number ${0 === page_num ? 'active' : ''}`} onClick={() => next_page(0)}>1</div>
