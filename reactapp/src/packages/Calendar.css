@@ -54,6 +54,8 @@
 .calendar-cart-bottom{
     background: rgba(209, 208, 208, 0.6);
     width: 100%;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
 }
 
 .opis-cart{
@@ -191,10 +193,10 @@ border-right: 3px solid white;
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 100%;
+    width: auto;
     height: auto;
     background: rgba(41, 41, 41, 0.6);
-
+    border-radius: 16px;
 }
 
 .name-location{
@@ -236,5 +238,26 @@ text-align: center;
 display: flex;
 justify-content: center;
 align-items: center;
+border-right: 3px solid white;
+}
 
+.calendar-button{
+    width: 155px;
+    height: 50px;
+    padding: 15px;
+    background:rgba(20, 20, 20, 0.5);
+    font-family: Bold;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 125%;
+    color: rgb(255, 255, 255);
+    border:none;
+    outline: none;
+    border-radius: 16px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.div__calendar-button{
+    display: flex;
+    align-items: center;
 }

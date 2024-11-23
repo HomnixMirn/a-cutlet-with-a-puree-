@@ -154,7 +154,7 @@ def get_event(request: HttpRequest, id: int):
 
 @api_view(['GET'])
 def get_latest_event(request: HttpRequest):
-    events = event.objects.all().order_by('-date_start')[:2]
+    events = event.objects.all().order_by('date_start')[:3]
     serializer = EventSerializer(events, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
     
