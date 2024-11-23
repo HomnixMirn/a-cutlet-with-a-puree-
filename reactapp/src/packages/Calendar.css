@@ -103,17 +103,26 @@
     color: black;
 }
 
-.but-filter.selected:hover,
-.but-filter.selected:focus,
-.but-filter:hover.selected,
-.but-filter:focus.selected {
-  background: rgba(199, 199, 199, 0.719);
+
+.selected{
+    background-color:#fff;
+    color: black;
+    font-family: Bold;
+}
+
+.but-filter:hover,
+.but-filter:focus{
+    background-color:#fff;
+    color: black;
+    font-family: Bold;
 }
 
 
 .but-sort:focus,
 .but-sort:hover{
-    background: rgba(255, 255, 255, 1);
+    background-color:#fff;
+    color: black;
+    font-family: Bold;
 }
 
 .filter-h1, .sort-h1{
@@ -136,6 +145,14 @@ border:none;
 outline: none;
 border-radius: 10px;
 }
+
+.button-form-filterSort:focus,
+.button-form-filterSort:hover{
+    background-color:#fff;
+    color: black;
+    font-family: Bold;
+}
+
 .block-poisk{
     background: rgba(41, 41, 41, 0.6);
     width: 60%;

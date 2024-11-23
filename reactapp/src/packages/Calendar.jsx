@@ -12,16 +12,15 @@ function Calendar()  {
     // const id = 55
     // const headers = {Authorization: 'Token ' + localStorage.getItem('token')}
     // axios.post(API_URL + 'add_personal_event', {'id':id} ,   {headers: {'Authorization': 'Token ' + localStorage.getItem('token')}}).then(res => console.log( )).catch(err => console.log(err))
-    const [selected, setSelected] = useState(null);
     const [events, setEvents] = useState([])
     const filtersRef = []
     const searchRef = []
     const timesRef = ''
     const page_numRef = 0
     const [page_num, setPage_num] = useState(useRef(page_numRef)['current']);
-    const filters = useRef(filtersRef)['current'];
+    const [filters, setFilters] = useState([]);
     const [search, setSearch] = useState(useRef(searchRef)['current']);
-    const [times, setTimes] =useState(useRef(timesRef)['current']) ;
+    const [times, setTimes] =useState(useRef(timesRef)['current']);
     const [pages, setPages] = useState([])
     console.log(times);
     
@@ -34,21 +33,19 @@ function Calendar()  {
     console.log(pages)
 
     function handleClick(name) {
-        try{
-          if (filters.includes(name)){
-            filters.splice(filters.indexOf(name), 1)
-            console.log(filters)
+        try {
+          if (filters.includes(name)) {
+            setFilters(filters.filter((filter) => filter !== name));
+            console.log(filters);
+          } else {
+            setFilters([...filters, name]);
+            console.log(filters);
           }
-          else {
-              filters.push(name)
-              console.log(filters)
-              }
-          }catch(e){
-              console.log(e)
-              console.log("error")
-            }
+        } catch (e) {
+          console.log(e);
+          console.log("error");
         }
-
+      }
 
     function handleTime(time) {
         setTimes('')
@@ -132,12 +129,12 @@ function Calendar()  {
                 <div className="filter">
                     <h1 className="filter-h1">Пол</h1>
                     <div className="buts-filter">
-                        <button onClick={() => handleClick('мужчины')} className={selected === 'мужчины' ? 'but-filter selected' : 'but-filter'}>Мужчины</button>
-                        <button onClick={() => handleClick('женщины')} className={selected === 'женщины' ? 'but-filter selected' : 'but-filter'}>Женщины</button>
-                        <button onClick={() => handleClick('юноши')} className={selected === 'юноши' ? 'but-filter selected' : 'but-filter'}>Юноши</button>
-                        <button onClick={() => handleClick('девушки')} className={selected === 'девушки' ? 'but-filter selected' : 'but-filter'}>Девушки</button>
-                        <button onClick={() => handleClick('мальчики')} className={selected === 'мальчики' ? 'but-filter selected' : 'but-filter'}>Мальчики</button>
-                        <button onClick={() => handleClick('девочки')} className={selected === 'девочки' ? 'but-filter selected' : 'but-filter'}>Девочки</button>
+                        <button onClick={() => handleClick('мужчины')} className={filters.includes('мужчины') ? 'but-filter selected' : 'but-filter'}>Мужчины</button>
+                        <button onClick={() => handleClick('женщины')} className={filters.includes('женщины') ? 'but-filter selected' : 'but-filter'}>Женщины</button>
+                        <button onClick={() => handleClick('юноши')} className={filters.includes('юноши') ? 'but-filter selected' : 'but-filter'}>Юноши</button>
+                        <button onClick={() => handleClick('девушки')} className={filters.includes('девушки') ? 'but-filter selected' : 'but-filter'}>Девушки</button>
+                        <button onClick={() => handleClick('мальчики')} className={filters.includes('мальчики')? 'but-filter selected' : 'but-filter'}>Мальчики</button>
+                        <button onClick={() => handleClick('девочки')} className={filters.includes('девочки') ? 'but-filter selected' : 'but-filter'}>Девочки</button>
                     </div>
                 </div>
                 <div className="prev-filterSort"></div>

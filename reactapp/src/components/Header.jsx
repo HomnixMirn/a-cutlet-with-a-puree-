@@ -47,10 +47,12 @@ function Header() {
             ?<>
                 <a href="" className='header-a'>
                 <img src={profile} alt="" className="header-img" />
+                <img src={profile2} alt="" className="header-img-hover" />
                 <h1 className="header-a-h1">Профиль</h1>
                 </a>
                 <a href="" className='header-a' onClick={(e) => LogOut(e)}>
                 <img src={log} alt="" className="header-img"/>
+                <img src={log2} alt="" className="header-img-hover"/>
                 <h1 className="header-a-h1">Выход</h1>
                 </a>
             </>
