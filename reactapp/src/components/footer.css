@@ -6,6 +6,7 @@ footer{
     height: 115px;
     position: fixed;
     bottom: 0px;
+    z-index: -1;
 }
 
 .contact-info{

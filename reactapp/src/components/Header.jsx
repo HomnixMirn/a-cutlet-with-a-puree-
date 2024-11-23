@@ -2,7 +2,9 @@ import './header.css'
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import info from "../static/img/Info.png"
+import info2 from "../static/img/Info2.png"
 import calendar from "../static/img/Calendar.png"
+import calendar2 from "../static/img/Calendar2.png"
 import profile from "../static/img/Male User.png"
 import log from "../static/img/Logout.png"
 import { API_URL } from '..';
@@ -31,10 +33,12 @@ function Header() {
             <div className="header-left">
             <Link to={'/'} className='header-a'>
                 <img src={info} alt="" className="header-img"/>
+                <img src={info2} class="header-img-hover"/>
                 <h1 className="header-a-h1">О нас</h1>
             </Link>
             <Link to={'/calendar'} className='header-a'>
                 <img src={calendar} alt="" className="header-img" />
+                <img src={calendar2} class="header-img-hover"/>
                 <h1 className="header-a-h1">Календарь</h1>
             </Link>
             { localStorage.getItem('token')

@@ -25,6 +25,7 @@ def send_email():
             server.login(sender,os.getenv("email_password"))
         except Exception as _ex:
             print( f'{_ex}\n Проверьте правильно ли указанны ваши данные')
+            break
         users = user.objects.all()
         for i in users:
             events =[]
@@ -38,8 +39,11 @@ def send_email():
                 msg['Subject'] = 'Не забудь о соревнованиях!'
                 msg['From'] = sender
                 msg['To'] = i.email
-                
-                massage=f"""<html><head></head><body><p style='font-size:20px;'>Уже завтра начинаются соревнования! <span style='background: #c4c4c4; border-radius:10px; padding: 10px; font-size:24px'>{'\n'.join([i.name for i in events])}</span><br><br>Успехов в соревнованиях!</p></body></html>"""
+                # try:  
+                # #   massage=f"""<html><head></head><body><p style='font-size:20px;'>Уже завтра начинаются соревнования! <span style='background: #c4c4c4; border-radius:10px; padding: 10px; font-size:24px'>{'\n'.join([i.name for i in events])}</span><br><br>Успехов в соревнованиях!</p></body></html>"""
+                # except:
+                #    massage=""
+                   
                 content= MIMEText(massage,'html')
                 msg.attach(content)
 
