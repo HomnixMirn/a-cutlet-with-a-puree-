@@ -178,3 +178,25 @@ def add_personal_event(request: HttpRequest):
     else:
         return Response({'error': 'No token provided'}, status=status.HTTP_401_UNAUTHORIZED)
      
+@api_view(['POST'])
+def delete_personal_event(request: HttpRequest):
+    data = request.data
+    headers = request.headers
+    token = headers.get('Authorization')
+    if token:
+        try:
+            token = token.split(' ')[1]
+            token_obj = userToken.objects.get(key=token)
+            user_obj = token_obj.user
+            event_obj = event.objects.get(id=data['id'])
+            user_events = user.objects.get(user=user_obj)
+            if event_obj in user_events.get_events():
+                user_events.registered_events.remove(event_obj)
+                return Response(status=status.HTTP_202_ACCEPTED)
+            else:
+                return Response({'error': 'Event not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e: 
+            print(e)
+            return Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)
+    else:
+        return Response({'error': 'No token provided'}, status=status.HTTP_401_UNAUTHORIZED)
