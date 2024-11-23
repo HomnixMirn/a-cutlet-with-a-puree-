@@ -23,7 +23,7 @@ function Login()  {
     <div className='modal-form'>
         <form className = 'form log' action="" method="post" onSubmit={(e) => PostFormLogin(e)}>
             <h1 className="form-h1">Вход</h1>
-            <a href="" className="form-a">Еще нет аккаунта?</a>
+            <a href="/register" className="form-a">Еще нет аккаунта?</a>
             <input type="text" name='username' placeholder="Логин" className='input-form' required/>
             <input type="password" name='password' placeholder="Пароль" className='input-form' required/>
             <button type="submit" className="form-button">Вход</button>

@@ -4,6 +4,8 @@ footer{
     width: 1920px;
     align-items: center;
     height: 115px;
+    position: fixed;
+    bottom: 0px;
 }
 
 .contact-info{

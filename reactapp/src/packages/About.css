@@ -1,13 +1,8 @@
-main{
-    width: 100%;
-    height: 100%;
-}
 .main-about{
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 812px;
-    width: 1920px;
     background-image: url(../static/img/Size-about.png);
 }
 .h1-about{
