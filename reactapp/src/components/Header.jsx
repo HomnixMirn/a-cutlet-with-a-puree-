@@ -1,5 +1,5 @@
 import './header.css'
-import React, { useEffect, useState } from 'react';
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import info from "../static/img/Info.png"
 import info2 from "../static/img/Info2.png"
@@ -13,62 +13,57 @@ import { API_URL } from '..';
 import axios from 'axios';
 
 function Header() {
-    const [isActive, setIsActive] = useState(() => {
-      const storedValue = localStorage.getItem('isActive');
-      return storedValue === 'true' ? true : false;
-    });
-
-  useEffect(() => {
-    localStorage.setItem('isActive', isActive.toString());
-  }, [isActive]);
-
-  function LogOut(e) {
-    e.preventDefault()
-    axios.get(API_URL + "logout",{  headers: {'Authorization': 'Token ' + localStorage.getItem('token')}}).then(
-      () => {
-        localStorage.removeItem('token')
-        window.location.href = '/'
-      }
+    useEffect(() => {
+        axios.get(API_URL + 'personal_info', {  headers: {'Authorization': 'Token ' + localStorage.getItem('token')}}).then(res => {
+            const data = res.data
+        }).catch(err => {
+            console.log(err)
+        })
+    })
+    function LogOut(e) {
+        e.preventDefault()
+        axios.get(API_URL + "logout",{  headers: {'Authorization': 'Token ' + localStorage.getItem('token')}}).then(
+            () => {
+                localStorage.removeItem('token')
+                window.location.href = '/'
+            }
+        )
+    }
+    return (
+        <header>
+            <Link to={'/'} className="logo">Sport Pulse</Link>
+            <div className="header-left">
+            <Link to={'/'} className='header-a'>
+                <img src={info} alt="" className="header-img"/>
+                <img src={info2} class="header-img-hover"/>
+                <h1 className="header-a-h1">О нас</h1>
+            </Link>
+            <Link to={'/calendar'} className='header-a'>
+                <img src={calendar} alt="" className="header-img" />
+                <img src={calendar2} class="header-img-hover"/>
+                <h1 className="header-a-h1">Календарь</h1>
+            </Link>
+            { localStorage.getItem('token')
+            ?<>
+                <a href="" className='header-a'>
+                <img src={profile} alt="" className="header-img" />
+                <h1 className="header-a-h1">Профиль</h1>
+                </a>
+                <a href="" className='header-a' onClick={(e) => LogOut(e)}>
+                <img src={log} alt="" className="header-img"/>
+                <h1 className="header-a-h1">Выход</h1>
+                </a>
+            </>
+            :<>
+            <ul className="ul-header">
+                <Link to={"/personal_info"} className="personal_info">Вход</Link>
+                <Link to={"/register"} className="register">/Регистрация</Link>
+            </ul>
+            </>
+            }
+            </div>
+        </header>
     )
-  }
-
-  return (
-    <header>
-      <Link to={'/'} className="logo">Sport Pulse</Link>
-      <div className="header-left">
-        <Link to={'/'} className='header-a'>
-          <img src={info} alt="" className="header-img"/>
-          <img src={info2} class="header-img-hover"/>
-          <h1 className="header-a-h1">О нас</h1>
-        </Link>
-        <Link to={'/calendar'} className='header-a'>
-          <img src={calendar} alt="" className="header-img" />
-          <img src={calendar2} class="header-img-hover"/>
-          <h1 className="header-a-h1">Календарь</h1>
-        </Link>
-        { localStorage.getItem('token')
-        ?<>
-          <a href="" className={`header-a ${isActive ? 'active' : ''}`} onMouseOver={() => setIsActive(true)} onMouseOut={() => setIsActive(false)}>
-            <img src={profile} alt="" className="header-img" />
-            <img src={profile2} alt="" className="header-img-hover" />
-            <h1 className="header-a-h1">Профиль</h1>
-          </a>
-          <a href="" className='header-a' onClick={(e) => LogOut(e)}>
-            <img src={log} alt="" className="header-img"/>
-            <img src={log2} alt="" className="header-img-hover"/>
-            <h1 className="header-a-h1">Выход</h1>
-          </a>
-        </>
-        :<>
-          <ul className="ul-header">
-            <Link to={"/personal_info"} className="personal_info">Вход</Link>
-            <Link to={"/register"} className="register">/Регистрация</Link>
-          </ul>
-        </>
-        }
-      </div>
-    </header>
-  )
 }
 
 export default Header

@@ -140,7 +140,7 @@ def get_events(request: HttpRequest, page: int = 0):
             page = int(page)
         except:
             page = 0
-        return Response(serializer.data[page*10:(page+1)*10], status=status.HTTP_200_OK)
+        return Response({"pages": len(serializer.data)//10,  'events': serializer.data[page*10:(page+1)*10]}, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
