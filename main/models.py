@@ -41,7 +41,7 @@ class userToken (Token):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     
 class quote (models.Model):
-    img = models.ImageField(upload_to='founder_quote')
+    img = models.ImageField(upload_to='founder_quote', blank=True)
     citation = models.CharField(max_length=255, blank=True)
     name = models.CharField(max_length=100, blank=True)
     
