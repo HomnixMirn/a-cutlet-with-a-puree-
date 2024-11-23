@@ -22,7 +22,9 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/personal_info" element={<Login />} />
           <Route path='/user' element={<LK/>}/>
-          <Route path="/event/:id" element={<Activity />} /></Routes>
+          <Route path="/event/:id" element={<Activity />} />
+          <Route path="*" element={<h1>404</h1>}/>
+          </Routes>
       </main>
       <Footer/>
     </div>

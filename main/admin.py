@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import *
+from django.utils.html import format_html
 # Register your models here.
 
 @admin.register(user)
@@ -21,4 +22,10 @@ class eventAdmin(admin.ModelAdmin):
     
 @admin.register(quote)
 class quoteAdmin(admin.ModelAdmin):
-    list_display = ['name','img','citation']
+    list_display = ['name','icon_tag','citation']
+    
+    def icon_tag(self, obj):
+        if not obj.img:
+            return 'No icon'
+        return format_html('<img src="{}" width="100" height="100"/>'.format(obj.img.url))
+    icon_tag.short_description = 'Icon'
