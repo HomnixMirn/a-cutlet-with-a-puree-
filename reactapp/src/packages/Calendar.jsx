@@ -1,4 +1,4 @@
-import { useEffect , useState} from 'react'
+import { useEffect , useState,useRef} from 'react'
 import poisk from '../static/img/poisk.png'
 import './Calendar.css'
 import {API_URL} from '../index'
@@ -12,12 +12,52 @@ function Calendar()  {
     // axios.post(API_URL + 'add_personal_event', {'id':id} ,   {headers: {'Authorization': 'Token ' + localStorage.getItem('token')}}).then(res => console.log( )).catch(err => console.log(err))
 
     const [events, setEvents] = useState([])
-    const filters = {}
-    const page_num = 10
+    const filtersRef = []
+    const [searchRef, setSearch] = useState('')
+    const timesRef = ''
+    const page_num = 0
+    const filters = useRef(filtersRef)['current'];
+    const search = useRef(searchRef)['current'];
+    const [times, setTimes] =useState(useRef(timesRef)['current']) ;
+
+    console.log(times);
+    
+    
+
     useEffect(() => {
-        axios.get(API_URL + page_num+ '/get_events').then(res => setEvents(res.data)).catch(err => console.log(err))
+        axios.get(API_URL + page_num+ '/get_events', {params: {"filters":filters.join(','), "search":search, "time":times}} ).then(res => setEvents(res.data)).catch(err => console.log(err))
     }, [])
     console.log(events)
+    console.log(  {params: {"filters":filters.join(','), "search":search, "time":times}})
+
+    function handleClick(name) {
+        try{
+          if (filters.includes(name)){
+            filters.splice(filters.indexOf(name), 1)
+            console.log(filters)
+          }
+          else {
+              filters.push(name)
+              console.log(filters)
+              }
+          }catch(e){
+              console.log(e)
+              console.log("error")
+            }
+        }
+
+
+    function handleTime(time) {
+        setTimes('')
+        setTimes(time)
+        console.log(times)
+    }
+
+
+
+    function acceptfilters(){
+        axios.get(API_URL + page_num+ '/get_events', {params: {"filters":filters.join(','), "search":search, "time":times}} ).then(res => setEvents(res.data)).catch(err => console.log(err))
+    }
     return (
     <div className='mega-block'>
         <div className="calendar-top">
@@ -41,27 +81,27 @@ function Calendar()  {
                 <div className="filter">
                     <h1 className="filter-h1">Пол</h1>
                     <div className="buts-filter">
-                        <button className='but-filter'>Мужчины</button>
-                        <button className='but-filter'>Женщины</button>
-                        <button className='but-filter'>Юноши</button>
-                        <button className='but-filter'>Девушки</button>
-                        <button className='but-filter'>Мальчики</button>
-                        <button className='but-filter'>Девочки</button>
+                        <button onClick={() => handleClick('мужчины')} className='but-filter'>Мужчины</button>
+                        <button onClick={() => handleClick('женщины')} className='but-filter'>Женщины</button>
+                        <button onClick={() => handleClick('юноши')} className='but-filter'>Юноши</button>
+                        <button onClick={() => handleClick('девушки')} className='but-filter'>Девушки</button>
+                        <button onClick={() => handleClick('мальчики')} className='but-filter'>Мальчики</button>
+                        <button onClick={() => handleClick('девочки')} className='but-filter'>Девочки</button>
                     </div>
                 </div>
                 <div className="prev-filterSort"></div>
                 <div className="sort">
                     <h1 className="sort-h1">Мероприятие</h1>
                     <div className="buts-sort">
-                        <button className="but-sort">Ближайшие</button>
-                        <button className="but-sort">Текущей недели</button>
-                        <button className="but-sort">Следующего месяца</button>
-                        <button className="but-sort">Квартал</button>
-                        <button className="but-sort">Полугодия</button>
+                        <button onClick={() => handleTime('next_day')} className="but-sort">Ближайшие</button>
+                        <button onClick={() => handleTime('next_week')} className="but-sort">Текущей недели</button>
+                        <button onClick={() => handleTime('next_month')} className="but-sort">Следующего месяца</button>
+                        <button onClick={() => handleTime('next_quarter')} className="but-sort">Квартал</button>
+                        <button onClick={() => handleTime('next_half_year')} className="but-sort">Полугодия</button>
                     </div>
                 </div>
                 <div className="prev-filterSort"></div>
-                <button class="button-form-filterSort">Применить</button>
+                <button onClick={() => acceptfilters()} class="button-form-filterSort">Применить</button>
             </div>
             <div className="calendars"> 
                 
