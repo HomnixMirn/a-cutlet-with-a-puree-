@@ -25,6 +25,7 @@ def send_email():
             server.login(sender,os.getenv("email_password"))
         except Exception as _ex:
             print( f'{_ex}\n Проверьте правильно ли указанны ваши данные')
+            break
         users = user.objects.all()
         for i in users:
             events =[]
