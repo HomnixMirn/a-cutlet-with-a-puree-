@@ -10,12 +10,17 @@ from django.contrib.auth import authenticate
 from .parse.sorting_data import get_data
 import re
 from datetime import datetime, timedelta
+from .utils import send_email
+
 # Create your views here.
 
 def is_valid_email(email):
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 
     return True if re.match(pattern, email) else False
+
+
+        
 
 @api_view(['POST'])
 def register(request: HttpRequest):
@@ -26,11 +31,12 @@ def register(request: HttpRequest):
         password = data['password']
         email = data['email']
         time_zone = data['time_zone']
+        print(f'username: {username}, password: {password}, email: {email}, time_zone: {time_zone}')
         if is_valid_email(email):
-            if User.objects.filter(Q(username=username) | Q(email=email)).exists():
+            print(User.objects.filter(Q(username=username)))
+            if User.objects.filter(Q(username=username)):
                 return Response({'error': 'User already exists'}, status=status.HTTP_400_BAD_REQUEST)
-            
-            user.objects.create(user=User.objects.create_user(username=username, password=password, email=email), name=data['name'], fname=data['fname'], email=email , time_zone=time_zone)
+            user.objects.create(user=User.objects.create_user(username=username, password=password), name=data['name'], fname=data['fname'], email=email , time_zone=time_zone)
             print('success')
             return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
         else:
