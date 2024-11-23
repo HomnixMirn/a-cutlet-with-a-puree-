@@ -44,3 +44,5 @@ class quote (models.Model):
     img = models.ImageField(upload_to='founder_quote')
     citation = models.CharField(max_length=255, blank=True)
     name = models.CharField(max_length=100, blank=True)
+    
+    

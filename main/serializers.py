@@ -15,6 +15,11 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = user
         fields = ['id', 'user_name', 'name', 'fname', 'email', 'get_events']
+
+class QuoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = quote
+        fields = "__all__"
         
         
         

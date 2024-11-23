@@ -1,6 +1,6 @@
 import './header.css'
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useEffect  } from "react";
+import { Link, useLocation } from "react-router-dom";
 import info from "../static/img/Info.png"
 import info2 from "../static/img/Info2.png"
 import calendar from "../static/img/Calendar.png"
@@ -13,6 +13,9 @@ import { API_URL } from '..';
 import axios from 'axios';
 
 function Header() {
+
+    const location = useLocation().pathname;
+    console.log(location)
     useEffect(() => {
         axios.get(API_URL + 'personal_info', {  headers: {'Authorization': 'Token ' + localStorage.getItem('token')}}).then(res => {
             const data = res.data
@@ -33,21 +36,20 @@ function Header() {
         <header>
             <Link to={'/'} className="logo">Sport Pulse</Link>
             <div className="header-left">
-            <Link to={'/'} className='header-a'>
-                <img src={info} alt="" className="header-img"/>
-                <img src={info2} class="header-img-hover"/>
-                <h1 className="header-a-h1">О нас</h1>
+            <Link to={'/'} className={location === '/' ? 'active-header header-a ' : 'header-a'}>
+                <img src={info} alt="" className={location === '/' ? ' header-img active-header-img' : 'header-img'}/>
+                <img src={info2} class={location === '/' ? 'active-header-img-hover header-img-hover ' : 'header-img-hover'}/>
+                <h1 className={location === '/' ? ' header-a-h1 active-header-h1' : 'header-a-h1'}>О нас</h1>
             </Link>
-            <Link to={'/calendar'} className='header-a'>
-                <img src={calendar} alt="" className="header-img" />
-                <img src={calendar2} class="header-img-hover"/>
-                <h1 className="header-a-h1">Календарь</h1>
+            <Link to={'/calendar'} className={location === '/calendar' ? 'active-header header-a ' : 'header-a'}>
+                <img src={calendar} alt="" className={location === '/calendar' ? ' header-img active-header-img' : 'header-img'} />
+                <img src={calendar2} class={location === '/calendar' ? 'active-header-img-hover header-img-hover ' : 'header-img-hover'}/>
+                <h1 className={location === '/calendar' ? ' header-a-h1 active-header-h1' : 'header-a-h1'}>Календарь</h1>
             </Link>
             { localStorage.getItem('token')
             ?<>
-                <a href="" className='header-a'>
+            <Link to={'/user'} className={location === '/user' ? 'active-header header-a ' : 'header-a'}>
                 <img src={profile} alt="" className="header-img" />
-                <img src={profile2} alt="" className="header-img-hover" />
                 <h1 className="header-a-h1">Профиль</h1>
                 </a>
                 <a href="" className='header-a' onClick={(e) => LogOut(e)}>
