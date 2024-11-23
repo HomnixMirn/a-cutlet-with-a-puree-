@@ -51,6 +51,8 @@
 }
 .checkbox-label {
   padding-left: 5px;
+  font-family: Regular;
+  color: white;
 }
 .checkbox {
   appearance: none;
@@ -121,6 +123,18 @@
     border:none;
     outline: none;
     border-radius: 16px;
+}
+.input-form.em{
+  padding: 15px;
+  background: rgba(209, 208, 208, 0.6);
+  font-family: Light;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 125%;
+  color: rgb(255, 255, 255);
+  border:none;
+  outline: none;
+  border-radius: 12px;
 }
 .input-form::placeholder{
     font-family: Light;

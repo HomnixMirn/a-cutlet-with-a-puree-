@@ -1,11 +1,13 @@
 import React, { Component, useEffect,useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import './About.css'
 import axios from 'axios';
 import { API_URL } from '..';
 
 
 function About(){
-    const [events, setEvents] = useState([])
+    const [events, setEvents] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(API_URL)
@@ -13,6 +15,10 @@ function About(){
             .catch(err => console.error('Ошибка при получении данных', err))
     } ,[]);
     console.log(events)
+
+    const handleDetailsClick = (id) => {
+        navigate(`/event/${id}`);
+    };
     return (
       <div className="main-about">
         <div className="about-02">
@@ -25,7 +31,7 @@ function About(){
                             <p className="about-cart">Место проведения:{event.location}</p>
                         </div>
                         <div className="div__about-button">
-                                <button type="submit" className="about-button">ПОДРОБНЕЕ</button>
+                        <button type="button" className="about-button" onClick={() => handleDetailsClick(event.id)}>ПОДРОБНЕЕ</button>
                             </div>    
                         <div className="date-about">
                                 <p className="p-date">{event.date_start}</p>

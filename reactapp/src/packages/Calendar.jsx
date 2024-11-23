@@ -1,4 +1,5 @@
 import { useEffect , useState,useRef , useCallback} from 'react'
+import { useNavigate } from 'react-router-dom'
 import poisk from '../static/img/poisk.png'
 import './Calendar.css'
 import {API_URL} from '../index'
@@ -6,6 +7,7 @@ import axios from 'axios'
 
 function Calendar()  {
     const [checkModal, setCheckModal] = useState(true)
+    const navigate = useNavigate();
     //TODO: добавить событие пользователю по id
     // const id = 55
     // const headers = {Authorization: 'Token ' + localStorage.getItem('token')}
@@ -91,6 +93,11 @@ function Calendar()  {
         fetchEvents()
 
     }
+
+    const handleDetailsClick = (id) => {
+        navigate(`/event/${id}`);
+    };
+
     return (
     <div className='mega-block'>
         <div className="calendar-top">
@@ -168,6 +175,9 @@ function Calendar()  {
                                     <div className="name-location">
                                         <h1 className="h1-name">{event.name}</h1>
                                         <h1 className="h1-location">{event.location}</h1>
+                                        <div class = "div__calendar-button">
+                                        <button type = "submit" className="calendar-button" onClick={() => handleDetailsClick(event.id)} >ПОДРОБНЕЕ</button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="calendar-cart-bottom">
