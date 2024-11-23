@@ -22,7 +22,6 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/personal_info" element={<Login />} />
           <Route path='/user' element={<LK/>}/>
-        </Routes>
           <Route path="/event/:id" element={<Activity />} /></Routes>
       </main>
       <Footer/>
