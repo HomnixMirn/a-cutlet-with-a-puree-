@@ -13,11 +13,11 @@ function Calendar()  {
 
     const [events, setEvents] = useState([])
     const filtersRef = []
-    const [searchRef, setSearch] = useState('')
+    const searchRef = []
     const timesRef = ''
     const page_num = 0
     const filters = useRef(filtersRef)['current'];
-    const search = useRef(searchRef)['current'];
+    const [search, setSearch] = useState(useRef(searchRef)['current']);
     const [times, setTimes] =useState(useRef(timesRef)['current']) ;
 
     console.log(times);
@@ -64,7 +64,25 @@ function Calendar()  {
             <h1 className="h1-calendar">Календарь</h1>
             <form className="block-poisk">
                 <div className="poisk-abc">
-                    <input type="text" placeholder="Поиск" className='input-poisk'/>
+                    <input type="text" placeholder="Поиск" className='input-poisk' value={search}
+                    onChange={(e) => {
+                        
+                        console.log(e.target.value)
+                        setSearch(e.target.value);
+                        axios.get(API_URL + page_num + '/get_events', {
+                        params: {
+                            filters: filters.join(','),
+                            search: search,
+                            time: times
+                        }
+                        })
+                        .then(res => setEvents(res.data))
+                        .catch(err => console.log(err))
+                    }} />
+
+                    
+                    
+                    
                     <div className="button-form-poisk">
                         <img src={poisk} alt="" />
                     </div>
