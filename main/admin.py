@@ -19,4 +19,6 @@ class userTokenAdmin(admin.ModelAdmin):
 class eventAdmin(admin.ModelAdmin):
     list_display = ['num_SM', 'name', 'date_start', 'date_end', 'location', 'participants', 'age_group' ]
     
-    
+@admin.register(quote)
+class quoteAdmin(admin.ModelAdmin):
+    list_display = ['name','img','citation']
