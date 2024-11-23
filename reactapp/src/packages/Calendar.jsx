@@ -183,7 +183,8 @@ function Calendar()  {
                                     </div>
                                 </div>
                                 <div className="calendar-cart-bottom">
-                                    <h1 className="opis-cart">{event.description} , {event.age_group}</h1>
+                                    <h1 className="opis-cart">{event.description}</h1>
+                                    <h1 className="opis-cart  age">Возрастные группы : {event.age_group}</h1>
                                 </div>
                              </div>
                         </div>))}
