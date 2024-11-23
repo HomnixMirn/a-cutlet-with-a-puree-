@@ -5,6 +5,7 @@ header{
     height: 85px;
     background-color: #141414;
     justify-content: space-around;
+    z-index: 1;
 }
 .header-left{
     display: flex;

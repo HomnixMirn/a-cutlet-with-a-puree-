@@ -1,31 +1,41 @@
-footer{
-    background-color:#141414;
-    display: flex;
-    width: 1920px;
-    align-items: center;
-    height: 115px;
+
+  
+footer {
     position: fixed;
-    bottom: 0px;
-    z-index: -1;
+    bottom: 0;
+    width: 1920px;
+    background-color: #141414;
+    display: flex;
+    align-items: center;
+    height: auto;
+    justify-content: space-around;
+    box-sizing: border-box;
+}
+
+.info-mess{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 400px;
 }
 
 .contact-info{
-    width: 280px;
+
     height: 67px;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    margin-left: 810px;
+
+    align-items: center;
+    justify-content: space-between;
 }
 
 .mes{
-    width: 66.67px;
-    height: 99px;
+    display: flex;
+    flex-direction: column;
 }
 
 .year-footer{
     color:#ffffff60;
-    margin-left: 310px;
     font-family: Light;
 }
 .email{

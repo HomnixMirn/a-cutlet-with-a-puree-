@@ -24,8 +24,8 @@ function Login()  {
         <form className = 'form log' action="" method="post" onSubmit={(e) => PostFormLogin(e)}>
             <h1 className="form-h1">Вход</h1>
             <a href="/register" className="form-a">Еще нет аккаунта?</a>
-            <input type="text" name='username' placeholder="Логин" className='input-form' required/>
-            <input type="password" name='password' placeholder="Пароль" className='input-form' required/>
+            <input type="text" name='username' placeholder="Логин" className='input-form-log' required/>
+            <input type="password" name='password' placeholder="Пароль" className='input-form-log' required/>
             <button type="submit" className="form-button">Вход</button>
         </form>
       </div>
