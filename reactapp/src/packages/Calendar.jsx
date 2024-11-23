@@ -1,7 +1,5 @@
-import { useEffect , useState,useRef , useCallback} from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useEffect , useState,useRef} from 'react'
-import { useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import poisk from '../static/img/poisk.png'
 import './Calendar.css'
 import {API_URL} from '../index'
@@ -31,7 +29,7 @@ function Calendar()  {
 
     useEffect(() => {
         axios.get(API_URL + page_num+ '/get_events', {params: {"filters":filters.join(','), "search":search, "time":times}} ).then(res =>acceptData(res)).catch(err => console.log(err))
-    }, [])
+    }, [search, page_num])
     console.log(events)
     console.log(pages)
 
@@ -58,20 +56,21 @@ function Calendar()  {
         console.log(times)
     }
 
-    const fetchEvents = useCallback(() => {
-        axios.get(API_URL + page_num + '/get_events', {
-          params: {
-            filters: filters.join(','),
-            search: search,
-            time: times
-          }
-        })
-        .then(res => acceptData(res))
-        .catch(err => console.log(err))
-      }, [page_num,search])
+    // const fetchEvents = useCallback(() => {
+    //     axios.get(API_URL + page_num + '/get_events', {
+    //       params: {
+    //         filters: filters.join(','),
+    //         search: search,
+    //         time: times
+    //       }
+    //     })
+    //     .then(res => acceptData(res))
+    //     .catch(err => console.log(err))
+    //   }, [page_num,search])
 
     function acceptfilters(){
         axios.get(API_URL + page_num+ '/get_events', {params: {"filters":filters.join(','), "search":search, "time":times}} ).then(res => acceptData(res) ).catch(err => console.log(err))
+        setPage_num(0)
     }
 
     function acceptData(res){
@@ -92,7 +91,7 @@ function Calendar()  {
             return
         }
         setPage_num(page)
-        fetchEvents()
+        // fetchEvents()
 
     }
 
@@ -110,9 +109,13 @@ function Calendar()  {
                     <input type="text" placeholder="Поиск" className='input-poisk' value={search}
                     onChange={(e) => {
                         
+
+                            setSearch(e.target.value);
+                            setPage_num(0)
+                            // fetchEvents()
+ 
+
                         
-                        setSearch(e.target.value);
-                        fetchEvents()
                         
                     }} />
                     
@@ -187,7 +190,7 @@ function Calendar()  {
                                 </div>
                              </div>
                         </div>))}
-                        {}
+                        {events.length === 0 ? <h1 className="no-events">Нет мероприятий</h1> : 
                         <div className="pages">
                             <div className="page_number arrow" onClick={() => next_page(page_num-1)}>←</div>
                                 <div className={`page_number ${0 === page_num ? 'active' : ''}`} onClick={() => next_page(0)}>1</div>
@@ -197,9 +200,9 @@ function Calendar()  {
 
                                 <div className={`page_number ${pages.length - 1 === page_num ? 'active' : ''}`} onClick={() => next_page(pages[pages.length - 1] )}>{pages[pages.length - 1] + 1}</div>
                             <div className="page_number arrow" onClick={() => next_page(page_num+1)}>→</div>
-                        </div>
+                        </div>}
             </div>
-            
+        
         </div>
     </div>
     )
