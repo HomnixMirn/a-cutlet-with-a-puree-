@@ -4,50 +4,61 @@ import './Activity.css'
 import axios from 'axios';
 import { API_URL,API_MEDIA } from '..';
 
-function Activity({ }){
+function Activity(){
     const [event,setEvent] = useState([])
+    const [ isAuthenticated, setIsAuthenticated ] = useState(false);
+    const [isRegistered, setIsRegistered] = useState(false);
     const {id}  = useParams();
     const navigate = useNavigate();
     console.log(id)
 
-    useEffect(()=>{
-        axios.get(
-            API_URL + "get_event/" + id,{id}
-        ).then(
-            (res) => {
-                setEvent(res.data)
-            }
-        ).catch(
-            (erorr) => {console.log(erorr)}
-        )
-    },[]
-    )
-    const dataEvent = event.event ?? [] 
-    const dataQuotes = event.quotes ?? [] 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setIsAuthenticated(true);
+        }
+        axios.get(`${API_URL}get_event/${id}`)
+            .then((res) => {
+                setEvent(res.data);
+                if (res.data.registered_events) { // Убедитесь, что это поле правильно возвращается сервером
+                    setIsRegistered(true);
+                } else {
+                    setIsRegistered(false);
+                }
+            })
+            .catch((error) => {
+                console.log('Error fetching event:', error);
+            });
+    }, [id]);
+
+    const dataEvent = event.event ?? [];
+    const dataQuotes = event.quotes ?? [];
 
     const handleRegister = () => {
-        const token = localStorage.getItem('token'); // Предполагается, что токен хранится в localStorage
-        if (!token) {
-            console.log('No token provided');
-            navigate('/register')
+        if (!isAuthenticated) {
+            navigate('/register');
             return;
         }
 
+        const token = localStorage.getItem('token');
         axios.post(`${API_URL}add_personal_event`, { id }, {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Token ${token}`
             }
         })
         .then((response) => {
             console.log('Event registered successfully');
+            setIsRegistered(true); // Обновляем состояние после успешной регистрации
             navigate('/user');
         })
         .catch((error) => {
             console.log('Error registering event:', error.response.data);
         });
-    };
-return(
 
+    }
+    
+    console.log(isRegistered)
+return(
     <div className ="main-activity">
         <h1 className="activity-name">{dataEvent.name}</h1>
         <div className="activity-quadruple">
@@ -69,7 +80,14 @@ return(
                             <p className="p-number">{dataEvent.participants}</p>
                         </div>
                     <div className="div__activity-button">
-                        <button type = "submit" className="activity-button"  onClick={handleRegister}  >Записаться</button>
+                        <button
+                         type = "button"
+                          className="activity-button"  
+                          onClick={handleRegister}
+                          disabled = {isRegistered}
+                          >
+                            {isRegistered ? 'Вы уже записаны' : (isAuthenticated ? 'Записаться' : 'Авторизоваться')}
+                            </button>
                     </div>
                     </div>
                     <div className="activity-qoute">
