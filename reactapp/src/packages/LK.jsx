@@ -34,6 +34,7 @@ function LK()  {
         navigate(`/event/${id}`);
     };
 
+
     return (
         
         <div className='lk'>
